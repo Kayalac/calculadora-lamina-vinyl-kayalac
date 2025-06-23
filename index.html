@@ -102,6 +102,11 @@
       const crossTees4 = Math.ceil((width / 2) * (length / 4));
       const wallAngle = Math.ceil(((2 * (width + length)) / 10));
 
+      const numClavos = wallAngle * 5;
+      const clavoUnit = numClavos <= 100 ? `${numClavos} clavos chato de 1"` : `${Math.ceil(numClavos / 100)} kg de clavo chato de 1"`;
+
+      const librasAlambre = Math.ceil(mainTees / 5) + 1;
+
       let outputHTML = `
         <li><strong>Área total:</strong> ${area.toFixed(2)} ft²</li>
         <li><strong>${panelName}s necesarios:</strong> ${numPanels}</li>
@@ -113,6 +118,8 @@
       }
 
       outputHTML += `<li><strong>Ángulo perimetral:</strong> ${wallAngle} piezas de 10 ft</li>`;
+      outputHTML += `<li><strong>Clavos chato 1":</strong> ${clavoUnit}</li>`;
+      outputHTML += `<li><strong>Alambre galvanizado 16#:</strong> ${librasAlambre} lb</li>`;
 
       resultDiv.classList.remove('hidden');
       outputList.innerHTML = outputHTML;
