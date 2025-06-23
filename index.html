@@ -22,7 +22,7 @@
       z-index: -1;
     }
     .btn-kayalac {
-      background-color: #1f2937 !important; /* azul marino oscuro */
+      background-color: #1f2937 !important;
       color: white !important;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
       transition: background-color 0.3s;
@@ -35,6 +35,18 @@
     .btn-kayalac:hover {
       background-color: #111827;
     }
+    .grid-layout {
+      display: grid;
+      margin-top: 1rem;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit, 20px);
+      grid-auto-rows: 20px;
+      gap: 1px;
+    }
+    .cell-panel { background-color: #facc15; width: 20px; height: 20px; }
+    .cell-main { background-color: #2563eb; width: 20px; height: 20px; }
+    .cell-cross4 { background-color: #10b981; width: 20px; height: 20px; }
+    .cell-cross2 { background-color: #f472b6; width: 20px; height: 20px; }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 relative">
@@ -66,6 +78,7 @@
     <div id="result" class="mt-6 hidden text-center">
       <h2 class="text-lg font-bold text-gray-800 mb-2">Resultados:</h2>
       <ul class="list-disc list-inside text-gray-700 text-left inline-block" id="outputList"></ul>
+      <div id="gridContainer" class="grid-layout"></div>
       <div class="mt-4">
         <button onclick="window.print()" class="btn-kayalac">Exportar/Imprimir PDF</button>
       </div>
@@ -79,6 +92,7 @@
     const form = document.getElementById('calcForm');
     const resultDiv = document.getElementById('result');
     const outputList = document.getElementById('outputList');
+    const gridContainer = document.getElementById('gridContainer');
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -87,14 +101,18 @@
       const panelType = document.getElementById('panelType').value;
       const area = width * length;
 
-      let panelArea, panelName, crossTees2 = 0;
+      let panelArea, panelName, crossTees2 = 0, cellW = 2, cellL = 2;
       if (panelType === '24x24') {
-        panelArea = 2 * 2;
+        panelArea = 4;
         panelName = 'Panel 24x24';
         crossTees2 = Math.ceil((width / 2) * (length / 2));
+        cellW = 2;
+        cellL = 2;
       } else {
-        panelArea = 2 * 4;
+        panelArea = 8;
         panelName = 'Panel 24x48';
+        cellW = 2;
+        cellL = 4;
       }
 
       const numPanels = Math.ceil(area / panelArea);
@@ -104,7 +122,6 @@
 
       const numClavos = wallAngle * 5;
       const clavoUnit = numClavos <= 100 ? `${numClavos} clavos chato de 1"` : `${Math.ceil(numClavos / 100)} kg de clavo chato de 1"`;
-
       const librasAlambre = Math.ceil(mainTees / 5) + 1;
 
       let outputHTML = `
@@ -123,6 +140,19 @@
 
       resultDiv.classList.remove('hidden');
       outputList.innerHTML = outputHTML;
+
+      // Generar layout visual del grid
+      const cols = Math.floor(width / (cellW));
+      const rows = Math.floor(length / (cellL));
+
+      gridContainer.style.gridTemplateColumns = `repeat(${cols}, 20px)`;
+      gridContainer.innerHTML = '';
+
+      for (let i = 0; i < rows * cols; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell-panel';
+        gridContainer.appendChild(cell);
+      }
     });
   </script>
 </body>
