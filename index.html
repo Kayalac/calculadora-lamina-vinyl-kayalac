@@ -35,18 +35,11 @@
     .btn-kayalac:hover {
       background-color: #111827;
     }
-    .grid-layout {
-      display: grid;
+    canvas {
+      border: 1px solid #ccc;
       margin-top: 1rem;
-      justify-content: center;
-      grid-template-columns: repeat(auto-fit, 20px);
-      grid-auto-rows: 20px;
-      gap: 1px;
+      max-width: 100%;
     }
-    .cell-panel { background-color: #facc15; width: 20px; height: 20px; }
-    .cell-main { background-color: #2563eb; width: 20px; height: 20px; }
-    .cell-cross4 { background-color: #10b981; width: 20px; height: 20px; }
-    .cell-cross2 { background-color: #f472b6; width: 20px; height: 20px; }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 relative">
@@ -78,7 +71,7 @@
     <div id="result" class="mt-6 hidden text-center">
       <h2 class="text-lg font-bold text-gray-800 mb-2">Resultados:</h2>
       <ul class="list-disc list-inside text-gray-700 text-left inline-block" id="outputList"></ul>
-      <div id="gridContainer" class="grid-layout"></div>
+      <canvas id="layoutCanvas" width="600" height="400"></canvas>
       <div class="mt-4">
         <button onclick="window.print()" class="btn-kayalac">Exportar/Imprimir PDF</button>
       </div>
@@ -87,12 +80,12 @@
       Desarrollado por <strong>Kayalac</strong> | Todos los derechos reservados 2025
     </footer>
   </div>
-
   <script>
     const form = document.getElementById('calcForm');
     const resultDiv = document.getElementById('result');
     const outputList = document.getElementById('outputList');
-    const gridContainer = document.getElementById('gridContainer');
+    const canvas = document.getElementById('layoutCanvas');
+    const ctx = canvas.getContext('2d');
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -141,18 +134,26 @@
       resultDiv.classList.remove('hidden');
       outputList.innerHTML = outputHTML;
 
-      // Generar layout visual del grid
-      const cols = Math.floor(width / (cellW));
-      const rows = Math.floor(length / (cellL));
-
-      gridContainer.style.gridTemplateColumns = `repeat(${cols}, 20px)`;
-      gridContainer.innerHTML = '';
-
-      for (let i = 0; i < rows * cols; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell-panel';
-        gridContainer.appendChild(cell);
+      // Dibujar el layout en canvas a escala
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const scale = 20; // 20px por ft
+      ctx.fillStyle = '#facc15';
+      for (let y = 0; y < length; y += cellL) {
+        for (let x = 0; x < width; x += cellW) {
+          ctx.fillRect(x * scale, y * scale, cellW * scale, cellL * scale);
+        }
       }
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0, 0, width * scale, length * scale);
+      ctx.font = "12px sans-serif";
+      ctx.fillStyle = '#000';
+      ctx.fillText(`${width} ft`, width * scale / 2 - 10, length * scale + 15);
+      ctx.save();
+      ctx.translate(-30, length * scale / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText(`${length} ft`, 0, 0);
+      ctx.restore();
     });
   </script>
 </body>
