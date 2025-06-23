@@ -41,6 +41,24 @@
       margin-top: 1rem;
       max-width: 100%;
     }
+    .leyenda {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: 0.875rem;
+    }
+    .leyenda span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .leyenda span i {
+      width: 1rem;
+      height: 1rem;
+      display: inline-block;
+    }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 relative">
@@ -70,118 +88,11 @@
       </div>
     </form>
     <div id="result" class="mt-6 hidden text-center">
-      <h2 class="text-lg font-bold text-gray-800 mb-2">Resultados:</h2>
-      <ul class="list-disc list-inside text-gray-700 text-left inline-block" id="outputList"></ul>
-      <canvas id="layoutCanvas" width="600" height="600"></canvas>
-      <div class="mt-4">
-        <button onclick="exportPDF()" class="btn-kayalac">Exportar/Imprimir PDF</button>
-      </div>
+      <!-- Aquí podrías agregar un nuevo contenedor `<canvas>` o `<div>` para mostrar un layout gráfico del cielo, como en la versión de Armstrong. Esto te permitirá renderizar un plano visual que luego también se puede incluir en el PDF. -->
     </div>
     <footer class="mt-8 text-center text-sm text-gray-500">
       Desarrollado por <strong>Kayalac</strong> | Todos los derechos reservados 2025
     </footer>
   </div>
-  <script>
-    const form = document.getElementById('calcForm');
-    const resultDiv = document.getElementById('result');
-    const outputList = document.getElementById('outputList');
-    const canvas = document.getElementById('layoutCanvas');
-    const ctx = canvas.getContext('2d');
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const width = parseFloat(document.getElementById('width').value);
-      const length = parseFloat(document.getElementById('length').value);
-      const panelType = document.getElementById('panelType').value;
-      const area = width * length;
-
-      let panelArea, panelName, crossTees2 = 0, cellW = 2, cellL = 2;
-      if (panelType === '24x24') {
-        panelArea = 4;
-        panelName = 'Panel 24x24';
-        crossTees2 = Math.ceil((width / 2) * (length / 2));
-        cellW = 2;
-        cellL = 2;
-      } else {
-        panelArea = 8;
-        panelName = 'Panel 24x48';
-        cellW = 2;
-        cellL = 4;
-      }
-
-      const numPanels = Math.ceil(area / panelArea);
-      const mainTees = Math.ceil(length / 4);
-      const crossTees4 = Math.ceil((width / 2) * (length / 4));
-      const wallAngle = Math.ceil(((2 * (width + length)) / 10));
-
-      const numClavos = wallAngle * 5;
-      const clavoUnit = numClavos <= 100 ? `${numClavos} clavos chato de 1"` : `${Math.ceil(numClavos / 100)} kg de clavo chato de 1"`;
-      const librasAlambre = Math.ceil(mainTees / 5) + 1;
-
-      let outputHTML = `
-        <li><strong>Área total:</strong> ${area.toFixed(2)} ft²</li>
-        <li><strong>${panelName}s necesarios:</strong> ${numPanels}</li>
-        <li><strong>Main Tees (12 ft):</strong> ${mainTees}</li>
-        <li><strong>Cross Tees 4 ft:</strong> ${crossTees4}</li>`;
-
-      if (crossTees2 > 0) {
-        outputHTML += `<li><strong>Cross Tees 2 ft:</strong> ${crossTees2}</li>`;
-      }
-
-      outputHTML += `<li><strong>Ángulo perimetral:</strong> ${wallAngle} piezas de 10 ft</li>`;
-      outputHTML += `<li><strong>Clavos chato 1":</strong> ${clavoUnit}</li>`;
-      outputHTML += `<li><strong>Alambre galvanizado 16#:</strong> ${librasAlambre} lb</li>`;
-
-      resultDiv.classList.remove('hidden');
-      outputList.innerHTML = outputHTML;
-
-      // Escalar y centrar
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const scale = Math.min(canvas.width / (width * 20), canvas.height / (length * 20));
-      const offsetX = (canvas.width - width * 20 * scale) / 2;
-      const offsetY = (canvas.height - length * 20 * scale) / 2;
-
-      for (let y = 0; y < length; y += cellL) {
-        for (let x = 0; x < width; x += cellW) {
-          ctx.fillStyle = '#facc15';
-          ctx.fillRect(offsetX + x * 20 * scale, offsetY + y * 20 * scale, cellW * 20 * scale, cellL * 20 * scale);
-        }
-      }
-
-      ctx.strokeStyle = '#000';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(offsetX, offsetY, width * 20 * scale, length * 20 * scale);
-
-      ctx.fillStyle = '#000';
-      ctx.font = '12px sans-serif';
-      ctx.fillText(`${width} ft`, offsetX + (width * 10 * scale) - 10, offsetY + length * 20 * scale + 15);
-      ctx.save();
-      ctx.translate(offsetX - 30, offsetY + length * 10 * scale);
-      ctx.rotate(-Math.PI / 2);
-      ctx.fillText(`${length} ft`, 0, 0);
-      ctx.restore();
-    });
-
-    function exportPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      doc.setFontSize(14);
-      doc.text("Resultados de la Calculadora Kayalac", 20, 20);
-
-      const items = Array.from(document.querySelectorAll('#outputList li')).map(li => li.innerText);
-      let y = 30;
-      items.forEach(item => {
-        doc.text(`- ${item}`, 20, y);
-        y += 8;
-      });
-
-      const canvasEl = document.getElementById('layoutCanvas');
-      const imgData = canvasEl.toDataURL("image/png");
-      doc.addImage(imgData, "PNG", 20, y + 10, 160, 0);
-
-      doc.save("Kayalac-resultado.pdf");
-    }
-  </script>
 </body>
 </html>
