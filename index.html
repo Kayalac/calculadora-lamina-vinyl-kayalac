@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora Lámina Acústica Vinyl | Kayalac</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div class="max-w-xl w-full bg-white shadow-xl rounded-2xl p-6 border border-orange-500">
+    <div class="flex justify-between items-center mb-4">
+      <img src="https://via.placeholder.com/120x40?text=KAYALAC+LOGO" alt="Logo Kayalac" class="h-10">
+      <h1 class="text-2xl font-extrabold text-orange-600 text-right">Kayalac Ctm</h1>
+    </div>
+    <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Calculadora Lámina Acústica Vinyl</h2>
+    <form id="calcForm" class="space-y-4">
+      <div>
+        <label class="block text-gray-700 font-semibold">Ancho del área (ft):</label>
+        <input type="number" id="width" required min="1" class="w-full border border-gray-300 rounded-xl p-2 mt-1" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-semibold">Largo del área (ft):</label>
+        <input type="number" id="length" required min="1" class="w-full border border-gray-300 rounded-xl p-2 mt-1" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-semibold">Tamaño de panel:</label>
+        <select id="panelType" class="w-full border border-gray-300 rounded-xl p-2 mt-1">
+          <option value="24x24">24" x 24"</option>
+          <option value="24x48">24" x 48"</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-xl font-semibold">Calcular</button>
+    </form>
+    <div id="result" class="mt-6 hidden">
+      <h2 class="text-lg font-bold text-gray-800 mb-2">Resultados:</h2>
+      <ul class="list-disc list-inside text-gray-700" id="outputList"></ul>
+      <button onclick="window.print()" class="mt-4 bg-black hover:bg-gray-800 text-white py-2 px-4 rounded-xl font-semibold w-full">Exportar/Imprimir PDF</button>
+    </div>
+    <footer class="mt-8 text-center text-sm text-gray-500">
+      Desarrollado por <strong>Kayalac Ctm</strong> | Todos los derechos reservados 2025
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('calcForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const width = parseFloat(document.getElementById('width').value);
+      const length = parseFloat(document.getElementById('length').value);
+      const panelType = document.getElementById('panelType').value;
+      const area = width * length;
+
+      let panelArea, panelName;
+      if (panelType === '24x24') {
+        panelArea = 2 * 2;
+        panelName = 'Panel 24x24';
+      } else {
+        panelArea = 2 * 4;
+        panelName = 'Panel 24x48';
+      }
+
+      const numPanels = Math.ceil(area / panelArea);
+      const mainTees = Math.ceil(length / 4);
+      const crossTees4 = Math.ceil((width / 2) * (length / 4));
+      const wallAngle = Math.ceil(((2 * (width + length)) / 10));
+
+      document.getElementById('result').classList.remove('hidden');
+      document.getElementById('outputList').innerHTML = `
+        <li><strong>Área total:</strong> ${area.toFixed(2)} ft²</li>
+        <li><strong>${panelName}s necesarios:</strong> ${numPanels}</li>
+        <li><strong>Main Tees (12 ft):</strong> ${mainTees}</li>
+        <li><strong>Cross Tees 4 ft:</strong> ${crossTees4}</li>
+        <li><strong>Ángulo perimetral (pies):</strong> ${wallAngle} piezas de 10 ft</li>
+      `;
+    });
+  </script>
+</body>
+</html>
