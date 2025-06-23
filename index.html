@@ -6,6 +6,7 @@
   <title>Calculadora Lámina Acústica Vinyl | Kayalac</title>
   <link rel="icon" href="favicon-circular.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body::before {
       content: "";
@@ -71,9 +72,9 @@
     <div id="result" class="mt-6 hidden text-center">
       <h2 class="text-lg font-bold text-gray-800 mb-2">Resultados:</h2>
       <ul class="list-disc list-inside text-gray-700 text-left inline-block" id="outputList"></ul>
-      <canvas id="layoutCanvas" width="600" height="400"></canvas>
+      <canvas id="layoutCanvas" width="600" height="600"></canvas>
       <div class="mt-4">
-        <button onclick="window.print()" class="btn-kayalac">Exportar/Imprimir PDF</button>
+        <button onclick="exportPDF()" class="btn-kayalac">Exportar/Imprimir PDF</button>
       </div>
     </div>
     <footer class="mt-8 text-center text-sm text-gray-500">
@@ -134,27 +135,53 @@
       resultDiv.classList.remove('hidden');
       outputList.innerHTML = outputHTML;
 
-      // Dibujar el layout en canvas a escala
+      // Escalar y centrar
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const scale = 20; // 20px por ft
-      ctx.fillStyle = '#facc15';
+      const scale = Math.min(canvas.width / (width * 20), canvas.height / (length * 20));
+      const offsetX = (canvas.width - width * 20 * scale) / 2;
+      const offsetY = (canvas.height - length * 20 * scale) / 2;
+
       for (let y = 0; y < length; y += cellL) {
         for (let x = 0; x < width; x += cellW) {
-          ctx.fillRect(x * scale, y * scale, cellW * scale, cellL * scale);
+          ctx.fillStyle = '#facc15';
+          ctx.fillRect(offsetX + x * 20 * scale, offsetY + y * 20 * scale, cellW * 20 * scale, cellL * 20 * scale);
         }
       }
+
       ctx.strokeStyle = '#000';
       ctx.lineWidth = 1;
-      ctx.strokeRect(0, 0, width * scale, length * scale);
-      ctx.font = "12px sans-serif";
+      ctx.strokeRect(offsetX, offsetY, width * 20 * scale, length * 20 * scale);
+
       ctx.fillStyle = '#000';
-      ctx.fillText(`${width} ft`, width * scale / 2 - 10, length * scale + 15);
+      ctx.font = '12px sans-serif';
+      ctx.fillText(`${width} ft`, offsetX + (width * 10 * scale) - 10, offsetY + length * 20 * scale + 15);
       ctx.save();
-      ctx.translate(-30, length * scale / 2);
+      ctx.translate(offsetX - 30, offsetY + length * 10 * scale);
       ctx.rotate(-Math.PI / 2);
       ctx.fillText(`${length} ft`, 0, 0);
       ctx.restore();
     });
+
+    function exportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFontSize(14);
+      doc.text("Resultados de la Calculadora Kayalac", 20, 20);
+
+      const items = Array.from(document.querySelectorAll('#outputList li')).map(li => li.innerText);
+      let y = 30;
+      items.forEach(item => {
+        doc.text(`- ${item}`, 20, y);
+        y += 8;
+      });
+
+      const canvasEl = document.getElementById('layoutCanvas');
+      const imgData = canvasEl.toDataURL("image/png");
+      doc.addImage(imgData, "PNG", 20, y + 10, 160, 0);
+
+      doc.save("Kayalac-resultado.pdf");
+    }
   </script>
 </body>
 </html>
