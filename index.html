@@ -36,6 +36,9 @@
     .btn-kayalac:hover {
       background-color: #111827;
     }
+    #whatsappBtn {
+      background-color: #4ade80 !important;
+    }
     canvas {
       border: 1px solid #ccc;
       margin-top: 1rem;
@@ -99,7 +102,7 @@
         <span><i style="background-color:#991b1b"></i> Ángulo 10 ft</span>
       </div>
       <div class="mt-4">
-        <button onclick="exportPDF()" class="btn-kayalac">Exportar PDF</button>
+        <button onclick="exportPDF()" class="btn-kayalac">Exportar/Imprimir PDF</button>
         <a id="whatsappBtn" target="_blank" class="btn-kayalac ml-2">Compartir por WhatsApp</a>
       </div>
     </div>
@@ -107,100 +110,5 @@
       Desarrollado por <strong>Kayalac</strong> | Todos los derechos reservados 2025
     </footer>
   </div>
-  <script>
-    document.getElementById('calcForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const width = parseFloat(document.getElementById('width').value);
-      const length = parseFloat(document.getElementById('length').value);
-      const panelType = document.getElementById('panelType').value;
-      const resultDiv = document.getElementById('result');
-      const outputList = document.getElementById('outputList');
-
-      if (!width || !length) return;
-
-      const area = width * length;
-      let panelArea, panelName, crossTees2 = 0, cellW = 2, cellL = 2;
-      if (panelType === '24x24') {
-        panelArea = 4;
-        panelName = 'Panel 24x24';
-        crossTees2 = Math.ceil((width / 2) * (length / 2));
-        cellW = 2;
-        cellL = 2;
-      } else {
-        panelArea = 8;
-        panelName = 'Panel 24x48';
-        cellW = 2;
-        cellL = 4;
-      }
-
-      const numPanels = Math.ceil(area / panelArea);
-      const mainTees = Math.ceil(length / 4);
-      const crossTees4 = Math.ceil((width / 2) * (length / 4));
-      const wallAngle = Math.ceil(((2 * (width + length)) / 10));
-      const numClavos = wallAngle * 5;
-      const clavoUnit = numClavos <= 100 ? `${numClavos} clavos chato de 1"` : `${Math.ceil(numClavos / 100)} kg de clavo chato de 1"`;
-      const librasAlambre = Math.ceil(mainTees / 5) + 1;
-
-      resultDiv.classList.remove('hidden');
-      outputList.innerHTML = `
-        <li>Área total: ${area.toFixed(2)} ft²</li>
-        <li>${panelName}s necesarios: ${numPanels}</li>
-        <li>Main Tees (12 ft): ${mainTees}</li>
-        <li>Cross Tees 4 ft: ${crossTees4}</li>
-        ${crossTees2 ? `<li>Cross Tees 2 ft: ${crossTees2}</li>` : ''}
-        <li>Ángulo perimetral: ${wallAngle} piezas de 10 ft</li>
-        <li>Clavos chato 1": ${clavoUnit}</li>
-        <li>Alambre galvanizado 16#: ${librasAlambre} lb</li>
-      `;
-
-      document.getElementById('whatsappBtn').href = `https://wa.me/?text=Resultado%20de%20la%20calculadora%20Kayalac%3A%0A%0A${outputList.innerText.replaceAll('\n', '%0A')}`;
-
-      const canvas = document.getElementById('layoutCanvas');
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const scale = Math.min(canvas.width / (width * 20), canvas.height / (length * 20));
-      const offsetX = (canvas.width - width * 20 * scale) / 2;
-      const offsetY = (canvas.height - length * 20 * scale) / 2;
-
-      for (let y = 0; y < length; y += cellL) {
-        for (let x = 0; x < width; x += cellW) {
-          ctx.fillStyle = '#1e3a8a';
-          ctx.fillRect(offsetX + x * 20 * scale, offsetY + y * 20 * scale, cellW * 20 * scale, cellL * 20 * scale);
-        }
-      }
-
-      ctx.strokeStyle = '#000';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(offsetX, offsetY, width * 20 * scale, length * 20 * scale);
-      ctx.fillStyle = '#000';
-      ctx.font = '12px sans-serif';
-      ctx.fillText(`${width} ft`, offsetX + (width * 10 * scale) - 10, offsetY - 10);
-      ctx.save();
-      ctx.translate(offsetX - 30, offsetY + length * 10 * scale);
-      ctx.rotate(-Math.PI / 2);
-      ctx.fillText(`${length} ft`, 0, 0);
-      ctx.restore();
-    });
-
-    function exportPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(14);
-      doc.text("Resultados de la Calculadora Kayalac", 20, 20);
-
-      const items = Array.from(document.querySelectorAll('#outputList li')).map(li => li.innerText);
-      let y = 30;
-      items.forEach(item => {
-        doc.text(`- ${item}`, 20, y);
-        y += 8;
-      });
-
-      const canvasEl = document.getElementById('layoutCanvas');
-      const imgData = canvasEl.toDataURL("image/png");
-      doc.addImage(imgData, "PNG", 20, y + 10, 160, 0);
-      doc.save("Kayalac-resultado.pdf");
-    }
-  </script>
 </body>
 </html>
