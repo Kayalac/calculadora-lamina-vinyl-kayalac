@@ -1,51 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora Lámina Acústica Vinyl</title>
-  <link rel="icon" href="favicon-circular.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Lámina Acústica Vinyl Kayalac</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="favicon.png">
 </head>
-<body style="background: url('background.png') no-repeat center center fixed; background-size: cover;">
-  <div class="container" style="background-color: rgba(255, 255, 255, 0.95);">
-    <img src="logo_kayalac.png" alt="Kayalac Logo" height="40" />
-    <form id="calcForm">
-      <label for="width">Ancho del área (ft):</label>
-      <input type="number" id="width" required maxlength="5" />
-
-      <label for="length">Largo del área (ft):</label>
-      <input type="number" id="length" required maxlength="5" />
-
-      <label for="panelType">Tamaño de panel:</label>
-      <select id="panelType">
-        <option value="24x24">24" x 24"</option>
-        <option value="24x48">24" x 48"</option>
-      </select>
-
-      <button type="submit">Calcular</button>
-    </form>
-
-    <div id="result" class="hidden">
-      <h4><strong>Resultados:</strong></h4>
-      <ul id="outputList"></ul>
-      <a id="whatsappBtn" href="#" target="_blank">Compartir por WhatsApp</a>
-    </div>
-
-    <div id="layoutContainer" class="hidden">
-      <canvas id="layoutCanvas"></canvas>
-      <div class="legend">
-        <div class="legend-item"><span class="color-box" style="background:#0B3D91"></span> Lámina Vinyl</div>
-        <div class="legend-item"><span class="color-box" style="background:yellow"></span> Cross Tee 2 ft</div>
-        <div class="legend-item"><span class="color-box" style="background:skyblue"></span> Cross Tee 4 ft</div>
-        <div class="legend-item"><span class="color-box" style="background:green"></span> Main Tee</div>
-        <div class="legend-item"><span class="color-box" style="background:maroon"></span> Ángulo 10 ft</div>
-      </div>
-    </div>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Kayalac Logo" style="height: 60px; display: block; margin: auto; margin-bottom: 20px;">
+    <h4>Calculadora Lámina Acústica Vinyl</h4>
+    <label>Ancho (ft): <input type="number" id="widthInput" max="9999"></label>
+    <label>Largo (ft): <input type="number" id="lengthInput" max="9999"></label>
+    <br>
+    <label for="tileSize">Tamaño de Panel:</label>
+    <select id="tileSize">
+      <option value="24x24">24" x 24"</option>
+      <option value="24x48">24" x 48"</option>
+    </select>
+    <br>
+    <button onclick="calculate()">Calcular</button>
+    <button id="printBtn" onclick="window.print()">Imprimir</button>
+    <a id="whatsappBtn" href="#" target="_blank">Compartir por WhatsApp</a>
+    <div id="results"></div>
+    <div class="legend" id="legend"></div>
+    <div id="layoutContainer"><canvas id="layoutCanvas" width="800" height="400"></canvas></div>
   </div>
-
+  <footer>© Copyright Kayalac</footer>
   <script src="App2.js"></script>
 </body>
 </html>
-
-
