@@ -1,1 +1,1 @@
-// Aquí va el contenido actualizado del archivo app.js con la lógica corregida
+// JavaScript content will be inserted here later
