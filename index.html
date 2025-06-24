@@ -1,111 +1,81 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calculadora Lamina Acústica Vinyl Kayalac</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora Lámina Acústica Vinyl</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-image: url('background.png');
+      font-family: Arial, sans-serif;
+      background: url('fondo.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-color: #f0f0f0;
+      opacity: 0.95;
     }
     .container {
-      background-color: rgba(255, 255, 255, 0.9);
-      max-width: 960px;
-      margin: 2rem auto;
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #1e3a8a;
-    }
-    label {
-      display: block;
-      margin-top: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
     }
     input, select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.3rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      width: 90px;
+      padding: 5px;
+      margin: 5px;
     }
-    button, .btn {
-      margin-top: 1rem;
-      padding: 10px 20px;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-    .btn-primary {
-      background-color: #1e3a8a;
-      color: white;
-    }
-    .btn-green {
-      background-color: #25D366;
-      color: white;
+    .hidden {
+      display: none;
     }
     canvas {
-      display: block;
-      margin: 2rem auto;
-      border: 2px solid #ccc;
+      border: 1px solid #000;
+      margin-top: 20px;
     }
-    #outputList {
-      list-style-type: square;
-      margin-top: 1rem;
+    ul li {
+      list-style: circle;
     }
-    .legend {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px dashed #ccc;
+    #whatsappBtn {
+      background-color: #90ee90;
+      color: black;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="logo_kayalac.png" alt="Logo Kayalac" style="display: block; max-width: 180px; margin: 0 auto 1rem;" />
-    <h1>Calculadora Cielo Vinyl - Kayalac</h1>
+    <h2>Calculadora Lámina Acústica Vinyl</h2>
     <form id="calcForm">
-      <label for="width">Ancho (ft):</label>
-      <input type="number" id="width" required>
-      <label for="length">Largo (ft):</label>
-      <input type="number" id="length" required>
-      <label for="panelType">Tipo de Panel:</label>
+      <label for="width">Ancho del área (ft):</label>
+      <input type="number" id="width" required />
+
+      <label for="length">Largo del área (ft):</label>
+      <input type="number" id="length" required />
+
+      <label for="panelType">Tamaño de panel:</label>
       <select id="panelType">
-        <option value="24x48">24x48</option>
-        <option value="24x24">24x24</option>
+        <option value="24x24">24" x 24"</option>
+        <option value="24x48">24" x 48"</option>
       </select>
-      <button type="submit" class="btn btn-primary">Calcular</button>
+
+      <button type="submit">Calcular</button>
     </form>
 
     <div id="result" class="hidden">
+      <h4>Resultados:</h4>
       <ul id="outputList"></ul>
-      <canvas id="layoutCanvas" width="900" height="600"></canvas>
-      <div class="legend">
-        <p><strong>Simbología:</strong></p>
-        <ul>
-          <li style="color:#1e3a8a">Láminas Vinyl</li>
-          <li style="color:green">Main Tee</li>
-          <li style="color:skyblue">Cross Tee 4 ft</li>
-          <li style="color:orange">Cross Tee 2 ft</li>
-          <li style="color:darkred">Ángulo Perimetral</li>
-        </ul>
-      </div>
-      <a id="whatsappBtn" target="_blank" class="btn btn-green">Compartir por WhatsApp</a>
-      <button onclick="window.print()" class="btn btn-primary">Imprimir</button>
+      <a id="whatsappBtn" href="#" target="_blank">Compartir por WhatsApp</a>
+    </div>
+
+    <div id="layoutContainer" class="hidden">
+      <canvas id="layoutCanvas"></canvas>
     </div>
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>
+
