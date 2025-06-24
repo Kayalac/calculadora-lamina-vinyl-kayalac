@@ -1,90 +1,43 @@
 
 function calculate() {
-  const width = parseFloat(document.getElementById("widthInput").value);
-  const length = parseFloat(document.getElementById("lengthInput").value);
-  const tileSize = document.getElementById("tileSize").value;
+  const width = parseFloat(document.getElementById('width').value);
+  const length = parseFloat(document.getElementById('length').value);
+  const panelSize = document.getElementById('panelSize').value;
 
-  if (isNaN(width) || isNaN(length) || width <= 0 || length <= 0) {
-    alert("Por favor, ingrese medidas válidas.");
+  if (!width || !length || !panelSize) {
+    alert("Por favor, complete todos los campos.");
     return;
   }
 
-  const tileW = tileSize === "24x24" ? 2 : 2;
-  const tileL = tileSize === "24x24" ? 2 : 4;
+  const area = width * length;
+  let totalPanels = 0, mainTees = 0, crossTees4 = 0, crossTees2 = 0, wallAngles = 0;
 
-  const tilesAcross = Math.ceil(width / tileW);
-  const tilesDown = Math.ceil(length / tileL);
-  const totalTiles = tilesAcross * tilesDown;
-
-  const mainTees = Math.ceil(length / 4) * (tilesAcross + 1);
-  const crossTees4 = tileSize === "24x48" ? (tilesDown + 1) * (tilesAcross - 1) : 0;
-  const crossTees2 = tileSize === "24x24" ? (tilesAcross - 1) * (tilesDown + 1) : tilesAcross * (tilesDown + 1);
-  const angle = Math.ceil(((width + length) * 2) / 10);
-  const clavos = angle * 5;
-  const clavoKg = clavos > 100 ? 1 : 0;
-  const alambreLbs = Math.ceil(mainTees / 5);
-
-  let resultsHtml = `
-    <ul>
-      <li><strong>Total Láminas:</strong> ${totalTiles}</li>
-      <li><strong>Main Tees:</strong> ${mainTees}</li>
-      <li><strong>Cross Tees 4ft:</strong> ${crossTees4}</li>
-      <li><strong>Cross Tees 2ft:</strong> ${crossTees2}</li>
-      <li><strong>Ángulo Perimetral 10ft:</strong> ${angle}</li>
-      <li><strong>Clavos 1" acero:</strong> ${clavos}${clavoKg ? " (Sugerido 1 Kg)" : ""}</li>
-      <li><strong>Alambre galvanizado #16:</strong> ${alambreLbs} lb</li>
-    </ul>
-  `;
-  document.getElementById("results").innerHTML = resultsHtml;
-
-  drawLayout(tilesAcross, tilesDown, tileW, tileL, tileSize);
-
-  // Compartir por WhatsApp
-  const message = encodeURIComponent("Resultado de cálculo:\n" + resultsHtml.replace(/<[^>]+>/g, ""));
-  document.getElementById("whatsappBtn").href = "https://wa.me/?text=" + message;
-}
-
-function drawLayout(cols, rows, tileW, tileL, tileSize) {
-  const canvas = document.getElementById("layoutCanvas");
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  const scale = 30;
-  const startX = 50;
-  const startY = 50;
-
-  // Colores
-  const colors = {
-    tile: "#003366",
-    main: "green",
-    cross4: "skyblue",
-    cross2: "gold",
-    angle: "maroon"
-  };
-
-  ctx.font = "12px Segoe UI";
-  ctx.fillStyle = "black";
-  ctx.fillText("ft", startX - 30, startY - 10);
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      ctx.fillStyle = colors.tile;
-      ctx.fillRect(startX + c * tileW * scale, startY + r * tileL * scale, tileW * scale, tileL * scale);
-      ctx.strokeStyle = "white";
-      ctx.strokeRect(startX + c * tileW * scale, startY + r * tileL * scale, tileW * scale, tileL * scale);
-    }
+  if (panelSize === "24x24") {
+    totalPanels = Math.ceil(area);
+    mainTees = Math.ceil(length / 4) * (Math.ceil(width / 2) + 1);
+    crossTees4 = Math.ceil(width / 2) * (Math.ceil(length / 4) - 1);
+    crossTees2 = Math.ceil(width / 2) * Math.ceil(length / 2);
+  } else if (panelSize === "24x48") {
+    totalPanels = Math.ceil(area / 2);
+    mainTees = Math.ceil(length / 4) * (Math.ceil(width / 4) + 1);
+    crossTees4 = Math.ceil(width / 4) * (Math.ceil(length / 4) - 1);
+    crossTees2 = Math.ceil(width / 2) * Math.ceil(length / 2);
   }
 
-  drawLegend();
-}
+  wallAngles = Math.ceil(((width + length) * 2) / 10);
 
-function drawLegend() {
-  const legend = document.getElementById("legend");
-  legend.innerHTML = `
-    <div class="legend-item"><span class="color-box" style="background-color: #003366;"></span>Vinyl</div>
-    <div class="legend-item"><span class="color-box" style="background-color: green;"></span>Main Tee</div>
-    <div class="legend-item"><span class="color-box" style="background-color: skyblue;"></span>Cross Tee 4ft</div>
-    <div class="legend-item"><span class="color-box" style="background-color: gold;"></span>Cross Tee 2ft</div>
-    <div class="legend-item"><span class="color-box" style="background-color: maroon;"></span>Ángulo</div>
+  const resultsHTML = `
+    <h4>Resultados:</h4>
+    <ul>
+      <li><strong>Total Láminas Vinyl:</strong> ${totalPanels}</li>
+      <li><strong>Main Tee (12 ft):</strong> ${mainTees}</li>
+      <li><strong>Cross Tee 4 ft:</strong> ${crossTees4}</li>
+      <li><strong>Cross Tee 2 ft:</strong> ${crossTees2}</li>
+      <li><strong>Ángulo 10 ft:</strong> ${wallAngles}</li>
+    </ul>
   `;
+  document.getElementById('results').innerHTML = resultsHTML;
+
+  const whatsappURL = `https://wa.me/?text=Resultados%20Kayalac:%0A%0A%20Láminas:%20${totalPanels}%0AMain%20Tee:%20${mainTees}%0ACross%20Tee%204ft:%20${crossTees4}%0ACross%20Tee%202ft:%20${crossTees2}%0AÁngulos:%20${wallAngles}`;
+  document.getElementById('whatsappBtn').href = whatsappURL;
 }

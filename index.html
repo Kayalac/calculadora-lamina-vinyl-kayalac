@@ -1,35 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calculadora Lámina Acústica Vinyl Kayalac</title>
+  <title>Calculadora Lámina Vinyl - Kayalac</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/x-icon" href="favicon-circular.ico" />
+  <script defer src="App2.js"></script>
 </head>
 <body>
   <div class="container">
-    <img src="logo.png" alt="Kayalac Logo" style="height: 60px; display: block; margin: auto; margin-bottom: 20px;" />
-    <h4>Calculadora Lámina Acústica Vinyl</h4>
-    <label>Ancho (ft): <input type="number" id="widthInput" max="9999"/></label>
-    <label>Largo (ft): <input type="number" id="lengthInput" max="9999"/></label>
-    <br/>
-    <label for="tileSize">Tamaño de Panel:</label>
-    <select id="tileSize">
-      <option value="24x24">24" x 24"</option>
-      <option value="24x48">24" x 48"</option>
-    </select>
-    <br/>
-    <button onclick="calculate()">Calcular</button>
-    <button id="printBtn" onclick="window.print()">Imprimir</button>
-    <a id="whatsappBtn" href="#" target="_blank">Compartir por WhatsApp</a>
-    <div id="results"></div>
-    <div class="legend" id="legend"></div>
-    <div id="layoutContainer">
-      <canvas id="layoutCanvas" width="800" height="400"></canvas>
+    <img src="logo_kayalac.png" alt="Kayalac Logo" style="width: 120px; margin-bottom: 20px;" />
+    <div>
+      <label>Ancho del área (ft): <input type="number" id="width" /></label>
+      <label>Largo del área (ft): <input type="number" id="length" /></label>
+      <label>Tamaño de panel:
+        <select id="panelSize">
+          <option value="24x24">24" x 24"</option>
+          <option value="24x48">24" x 48"</option>
+        </select>
+      </label>
+      <button onclick="calculate()">Calcular</button>
     </div>
+
+    <div id="results"></div>
+    <canvas id="layoutCanvas" width="800" height="400"></canvas>
+
+    <a id="whatsappBtn" href="#" target="_blank">Compartir por WhatsApp</a>
+    <button id="printBtn" onclick="window.print()">Imprimir</button>
   </div>
-  <footer>© Copyright Kayalac</footer>
-  <script src="App2.js"></script>
+
+  <footer>
+    © 2025 Copyrights por Kayalac
+  </footer>
 </body>
 </html>
