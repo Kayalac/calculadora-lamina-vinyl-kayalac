@@ -1,0 +1,68 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: url('background.png') no-repeat center center fixed;
+  background-size: cover;
+  opacity: 0.35;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+input[type="number"], select {
+  width: 80px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+canvas {
+  border: 1px solid #000;
+  margin-top: 20px;
+  display: block;
+  max-width: 100%;
+}
+
+ul li {
+  list-style-type: circle;
+}
+
+#whatsappBtn {
+  background-color: #90ee90;
+  color: black;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.legend {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.color-box {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+}
