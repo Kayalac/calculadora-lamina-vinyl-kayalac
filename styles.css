@@ -1,102 +1,108 @@
 body {
-  margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background: url("background.png") no-repeat center center fixed;
+  background: url('background.png') no-repeat center center fixed;
   background-size: cover;
-  background-color: rgba(255, 255, 255, 0.35);
 }
 
 .container {
-  background-color: rgba(255, 255, 255, 0.95);
-  margin: 3rem auto;
-  padding: 2rem;
-  max-width: 800px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 128, 0, 0.95);
+  padding: 20px;
+  max-width: 960px;
+  margin: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-h4 {
+label, h4 {
   font-weight: bold;
-  margin-top: 2rem;
-}
-
-label {
   display: block;
-  margin-top: 1rem;
-  font-weight: 600;
+  margin-top: 10px;
 }
 
-input,
-select {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  border-radius: 10px;
+input, select {
+  width: auto;
+  max-width: 120px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 1rem;
 }
 
 .button-group {
-  margin-top: 1rem;
   display: flex;
-  gap: 1rem;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .btn {
-  background: linear-gradient(to right, #007aff, #0051ff);
-  border: none;
+  padding: 10px 15px;
+  background-color: #0b3d91;
   color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 12px;
-  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn:hover {
-  background: #003bb0;
+  background-color: #092e6c;
 }
 
 .btn.whatsapp {
   background-color: #25D366;
-  margin-top: 1rem;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+#result {
+  margin-top: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+#layoutCanvas {
+  margin-top: 20px;
+  border: 1px solid #333;
+  background-color: white;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  margin-top: 20px;
+  gap: 10px;
+  background-color: rgba(255,255,255,0.9);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.color-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: white;
 }
 
 .hidden {
   display: none;
 }
 
-canvas {
-  margin-top: 2rem;
-  border: 1px solid #ccc;
-  background: white;
-  border-radius: 10px;
-}
-
-.legend {
-  margin-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.color-box {
-  width: 16px;
-  height: 16px;
-  margin-right: 0.5rem;
-  border-radius: 3px;
-}
-
-footer {
-  margin-top: 3rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #666;
-}
 
