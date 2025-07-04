@@ -23,26 +23,34 @@
         <option value="24x48">24" x 48"</option>
       </select>
 
-      <button type="submit">Calcular</button>
-      <button type="button" onclick="window.print()">Imprimir</button>
+      <div class="button-group">
+        <button type="submit" class="btn">Calcular</button>
+        <button type="button" onclick="window.print()" class="btn">Imprimir</button>
+      </div>
     </form>
 
     <div id="result" class="hidden">
       <h4><strong>Resultados:</strong></h4>
       <ul id="outputList"></ul>
-      <a id="whatsappBtn" href="#" target="_blank">Compartir por WhatsApp</a>
+      <a id="whatsappBtn" href="#" target="_blank" class="btn whatsapp">Compartir por WhatsApp</a>
     </div>
 
     <div id="layoutContainer" class="hidden">
-      <canvas id="layoutCanvas" width="1000" height="600"></canvas>
+      <canvas id="layoutCanvas" width="1100" height="800"></canvas>
       <div class="legend">
         <div class="legend-item"><span class="color-box" style="background:#0B3D91"></span> Lámina Vinyl</div>
         <div class="legend-item"><span class="color-box" style="background:yellow"></span> Cross Tee 2 ft</div>
         <div class="legend-item"><span class="color-box" style="background:skyblue"></span> Cross Tee 4 ft</div>
         <div class="legend-item"><span class="color-box" style="background:green"></span> Main Tee</div>
         <div class="legend-item"><span class="color-box" style="background:maroon"></span> Ángulo 10 ft</div>
+        <div class="legend-item"><span class="color-box" style="background:black"></span> Alambre galvanizado</div>
+        <div class="legend-item"><span class="color-box" style="background:gray"></span> Clavos 1" chato</div>
       </div>
     </div>
+
+    <footer>
+      <p>&copy; 2025 KAYALAC. Todos los derechos reservados.</p>
+    </footer>
   </div>
 
   <script src="App2.js"></script>
