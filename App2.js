@@ -1,5 +1,7 @@
 // App2.js
 // Lógica principal de cálculo para la calculadora de cielos falsos Kayalac
+document.getElementById('result').classList.remove('hidden');
+document.getElementById('layoutContainer').classList.remove('hidden');
 
 document.getElementById('calcForm').addEventListener('submit', function (e) {
   e.preventDefault();
