@@ -37,41 +37,59 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   const span = mainDirection === 'longitud' ? length : width;
   const perp = mainDirection === 'longitud' ? width  : length;
 
-  // 7) Main Tees (líneas)
-  let mainLines;
-  if (is24x48) {
-    // cada 4 ft + 1 borde extra
-    mainLines = Math.ceil(span / 4) + 1;
-  } else {
-    // cada 2 ft, todo interior
-    mainLines = Math.ceil(span / 2);
+  // 7) Simulación de líneas de Main Tee:
+  //    Avanza cada panelL (2ft o 4ft) a lo largo de "span" incluyendo borde
+  let mains = [];
+  for (let pos = 0; pos <= span + 0.001; pos += panelL) {
+    mains.push(pos);
   }
-  const mainTees = mainLines;
+  const mainTees = mains.length;
 
-  // 8) Cross Tees con vanos interiores (floor)
-  let cross4 = 0, cross2 = 0;
-  if (is24x48) {
-    // solo Cross 4ft: interior = floor((perp - 4) / 4)
-    const vanos4 = Math.floor((perp - 4) / 4);
-    cross4 = Math.max(0, (mainLines - 1) * vanos4);
-  } else {
-    // ambos tipos
-    const vanos4 = Math.floor((perp - 4) / 4);
-    const vanos2 = Math.floor((perp - 2) / 2);
-    cross4 = Math.max(0, (mainLines - 1) * vanos4);
-    cross2 = Math.max(0, (mainLines - 1) * vanos2);
+  // 8) Simulación de líneas de Cross Tee:
+  //    Para border colocamos medias piezas (half of panel size)
+  const border2 = 1; // 1ft medio panel de 2ft
+  const border4 = 2; // 2ft medio panel de 4ft
+
+  // Generar posiciones interiores de Cross de 2ft y 4ft
+  let crossLines2 = [];
+  let crossLines4 = [];
+
+  // 2ft cross desde border2 hasta perp-border2
+  for (let pos = border2; pos <= perp - border2 + 0.001; pos += 2) {
+    crossLines2.push(pos);
   }
 
-  // 9) Ángulo perimetral (10 ft)
-  const perim      = 2 * (width + length);
-  const anglePieces= Math.ceil(perim / 10);
+  // 4ft cross desde border4 hasta perp-border4
+  for (let pos = border4; pos <= perp - border4 + 0.001; pos += 4) {
+    crossLines4.push(pos);
+  }
 
-  // 10) Alambre (1 lb / 5 Main)
+  // Función contadora de tramos completos
+  function countPieces(lines, length, pieceLen) {
+    return lines.reduce((sum, _) => sum + Math.floor(length / pieceLen), 0);
+  }
+
+  // Calcular piezas necesarias
+  let cross2 = 0, cross4 = 0;
+  if (is24x48) {
+    // Solo 4ft
+    cross4 = countPieces(crossLines4, span, 4);
+  } else {
+    // Ambos
+    cross4 = countPieces(crossLines4, span, 4);
+    cross2 = countPieces(crossLines2, span, 2);
+  }
+
+  // 9) Ángulo perimetral (10 ft cada tramo)
+  const perim       = 2 * (width + length);
+  const anglePieces = Math.ceil(perim / 10);
+
+  // 10) Alambre (1 lb / 5 Main Tees)
   const wireLb = Math.ceil(mainTees / 5);
 
-  // 11) Clavos (5 por ángulo)
-  const nails = anglePieces * 5;
-  const nailTxt = nails > 100 
+  // 11) Clavos (5 por cada ángulo de 10ft)
+  const nails  = anglePieces * 5;
+  const nailTxt = nails > 100
     ? '1 kg de clavos chato 1"'
     : `${nails} clavos chato 1"`;
 
@@ -88,7 +106,7 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   document.getElementById('result').classList.remove('hidden');
   layoutContainer.classList.remove('hidden');
 
-  // 13) Dibujar canvas (1 ft = 30px)
+  // 13) Dibujar en canvas (1 ft = 30px)
   const scale = 30;
   canvas.width  = width  * scale;
   canvas.height = length * scale;
@@ -106,12 +124,12 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
     }
   }
 
-  // 14) WhatsApp
+  // 14) WhatsApp share
   const waText = [
     'Cálculo cielo falso:',
     `Láminas ${totalPanels}`,
     `Main Tees ${mainTees}`,
-    `Cross4ft ${cross4}`, 
+    `Cross4ft ${cross4}`,
     `Cross2ft ${cross2}`,
     `Ángulos ${anglePieces}`,
     nailTxt,
@@ -121,5 +139,4 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   document.getElementById('whatsappBtn').href =
     `https://wa.me/?text=${encodeURIComponent(waText)}`;
 });
-
 
