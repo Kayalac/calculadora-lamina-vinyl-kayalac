@@ -27,29 +27,35 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   const panelsLong = Math.ceil(length / panelLength);
   const totalPanels = panelsWide * panelsLong;
 
-  // ❌ Eliminar esta línea si aún la tienes:
-  // const crossTees2ft = panelType === '24x24' ? (panelsWide - 1) * panelsLong : (panelsWide * (panelsLong - 1));
+  // Lógica corregida para Main Tees y Cross Tees según dirección y tipo de panel
+if (mainDirection === 'longitud') {
+  // Main Tees colocados a lo largo del área
+  mainTees = Math.ceil(length / 4);
 
-  // ✅ Sustituir por esta lógica condicional:
-  let mainTees = 0;
-  let crossTees4ft = 0;
-  let crossTees2ft = 0;
-
-  if (mainDirection === 'longitud') {
-    // Main Tees a lo largo (horizontal visualmente)
-    mainTees = Math.ceil(length / 4) * (Math.floor(width / 2) + 1);
-    crossTees4ft = panelType === '24x48' ? (panelsLong - 1) * panelsWide : 0;
-    crossTees2ft = panelType === '24x24'
-      ? (panelsWide - 1) * panelsLong
-      : 0;
-  } else {
-    // Main Tees a lo ancho (vertical visualmente)
-    mainTees = Math.ceil(width / 4) * (Math.floor(length / 2) + 1);
-    crossTees4ft = panelType === '24x48' ? (panelsWide - 1) * panelsLong : 0;
-    crossTees2ft = panelType === '24x24'
-      ? (panelsLong - 1) * panelsWide
-      : 0;
+  if (panelType === '24x48') {
+    // Para paneles de 2x4 ft, solo se usan Cross Tee de 4ft
+    crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 4) - 1);
+    crossTees2ft = 0;
+  } else if (panelType === '24x24') {
+    // Para paneles de 2x2 ft, se usan ambos tipos de Cross Tee
+    crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 4));
+    crossTees2ft = Math.ceil(width / 2) * (Math.ceil(length / 2) - 1);
   }
+
+} else {
+  // Main Tees colocados a lo ancho del área
+  mainTees = Math.ceil(width / 4);
+
+  if (panelType === '24x48') {
+    // Para paneles de 2x4 ft, solo se usan Cross Tee de 4ft
+    crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 4) - 1);
+    crossTees2ft = 0;
+  } else if (panelType === '24x24') {
+    // Para paneles de 2x2 ft, se usan ambos tipos de Cross Tee
+    crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 4));
+    crossTees2ft = Math.ceil(length / 2) * (Math.ceil(width / 2) - 1);
+  }
+}
 
   // Ángulo Perimetral (10 ft cada uno)
   const perimeter = 2 * (width + length);
