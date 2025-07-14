@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -8,66 +8,63 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="logo_kayalac.png" alt="Kayalac Logo" height="40" />
-    <form id="calcForm">
-      <label for="width">Ancho del área (ft):</label>
-      <input type="number" id="width" required maxlength="5" />
+  <div class="app">
 
-      <label for="length">Largo del área (ft):</label>
-      <input type="number" id="length" required maxlength="5" />
+    <!-- INPUT CARD -->
+    <div class="glass-card input-card">
+      <header class="glass-header">
+        <img src="logo_kayalac.png" alt="Kayalac Logo" class="logo">
+        <h1>Calculadora de Plafón</h1>
+      </header>
 
-      <label for="panelType">Tamaño de panel:</label>
-      <select id="panelType">
-        <option value="24x24">24" x 24"</option>
-        <option value="24x48">24" x 48"</option>
-      </select>
-     
-      <label for="mainDirection">Dirección de los Main Tees:</label>
-        <select id="mainDirection">
-          <option value="longitud">A lo largo del área</option>
-          <option value="ancho">A lo ancho del área</option>
-        </select>
+      <form id="calcForm" class="glass-body">
+        <div class="field">
+          <label for="width">Ancho (ft):</label>
+          <input type="number" id="width" placeholder="e.g. 25" required />
+        </div>
+        <div class="field">
+          <label for="length">Largo (ft):</label>
+          <input type="number" id="length" placeholder="e.g. 30" required />
+        </div>
+        <div class="field">
+          <label for="panelType">Tamaño de panel:</label>
+          <select id="panelType">
+            <option value="24x24">24″ × 24″</option>
+            <option value="24x48">24″ × 48″</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mainDirection">Dirección Main Tee:</label>
+          <select id="mainDirection">
+            <option value="longitud">A lo largo</option>
+            <option value="ancho">A lo ancho</option>
+          </select>
+        </div>
 
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Calcular</button>
+          <button type="button" onclick="window.print()" class="btn btn-secondary">Imprimir</button>
+          <a href="manual_instalacion_kayalac.pdf" class="btn btn-secondary" target="_blank">Manual PDF</a>
+          <a id="whatsappBtn" href="#" class="btn btn-whatsapp" target="_blank">Compartir WhatsApp</a>
+        </div>
+      </form>
+    </div>
 
-      <div class="button-group">
-        <button type="submit" class="btn">Calcular</button>
-        <button type="button" onclick="window.print()" class="btn">Imprimir</button>
-        <button type="button" onclick="window.open('manual_instalacion_kayalac.pdf')" class="btn">Imprimir Manual</button>
-      </div>
-    </form>
-    
-  <div id="result" class="hidden">
-  <h4><strong>Resultados:</strong></h4>
-  <ul id="outputList"></ul>
+    <!-- RESULT CARD -->
+    <div id="result" class="glass-card result-card hidden">
+      <h2>Resultados</h2>
+      <ul id="outputList"></ul>
 
-  <!-- aquí insertamos el canvas para el layout -->
-  <div id="layoutContainer" class="hidden">
-    <canvas id="layoutCanvas"></canvas>
-  </div>
-
-  <a id="whatsappBtn" href="#" target="_blank" class="btn whatsapp">Compartir por WhatsApp</a>
-</div>
-
-
-
-    <div id="layoutContainer" class="hidden">
-      <canvas id="layoutCanvas" width="1200" height="800"></canvas>
-      <div class="legend">
-        <div class="legend-item"><span class="color-box" style="background:#0B3D91"></span> Lámina Vinyl</div>
-        <div class="legend-item"><span class="color-box" style="background:yellow"></span> Cross Tee 2 ft</div>
-        <div class="legend-item"><span class="color-box" style="background:skyblue"></span> Cross Tee 4 ft</div>
-        <div class="legend-item"><span class="color-box" style="background:green"></span> Main Tee</div>
-        <div class="legend-item"><span class="color-box" style="background:maroon"></span> Ángulo 10 ft</div>
-        <div class="legend-item"><span class="color-box" style="background:black"></span> Alambre galvanizado</div>
-        <div class="legend-item"><span class="color-box" style="background:gray"></span> Clavos 1" chato</div>
+      <div id="layoutContainer" class="canvas-wrap hidden">
+        <canvas id="layoutCanvas"></canvas>
       </div>
     </div>
 
-    <footer>
-      <p>&copy; 2025 Kayalac. Todos los derechos reservados.</p>
-    </footer>
   </div>
+
+  <footer class="glass-footer">
+    <p>© 2025 Kayalac. Todos los derechos reservados.</p>
+  </footer>
 
   <script src="App2.js"></script>
 </body>
