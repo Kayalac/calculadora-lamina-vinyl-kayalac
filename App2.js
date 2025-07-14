@@ -7,7 +7,7 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   const width = parseFloat(document.getElementById('width').value);
   const length = parseFloat(document.getElementById('length').value);
   const panelType = document.getElementById('panelType').value;
-  const mainDirection = document.getElementById('mainDirection').value; // Nuevo: Dirección de Main Tee
+  const mainDirection = document.getElementById('mainDirection').value; // Dirección de Main Tee
   const outputList = document.getElementById('outputList');
   const layoutContainer = document.getElementById('layoutContainer');
   const canvas = document.getElementById('layoutCanvas');
@@ -27,7 +27,10 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   const panelsLong = Math.ceil(length / panelLength);
   const totalPanels = panelsWide * panelsLong;
 
-  // Cálculo de Main Tees y Cross Tees depende de la dirección elegida
+  // ❌ Eliminar esta línea si aún la tienes:
+  // const crossTees2ft = panelType === '24x24' ? (panelsWide - 1) * panelsLong : (panelsWide * (panelsLong - 1));
+
+  // ✅ Sustituir por esta lógica condicional:
   let mainTees = 0;
   let crossTees4ft = 0;
   let crossTees2ft = 0;
@@ -38,14 +41,14 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
     crossTees4ft = panelType === '24x48' ? (panelsLong - 1) * panelsWide : 0;
     crossTees2ft = panelType === '24x24'
       ? (panelsWide - 1) * panelsLong
-      : panelsWide * (panelsLong - 1);
+      : 0;
   } else {
     // Main Tees a lo ancho (vertical visualmente)
     mainTees = Math.ceil(width / 4) * (Math.floor(length / 2) + 1);
     crossTees4ft = panelType === '24x48' ? (panelsWide - 1) * panelsLong : 0;
     crossTees2ft = panelType === '24x24'
       ? (panelsLong - 1) * panelsWide
-      : panelsLong * (panelsWide - 1);
+      : 0;
   }
 
   // Ángulo Perimetral (10 ft cada uno)
@@ -77,12 +80,11 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   // Dibujar en canvas (a escala)
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const scale = 30; // 1 ft = 30px
-  ctx.strokeStyle = '#000';
-  ctx.lineWidth = 1;
-
-  // Ajustar canvas para adaptarse a medidas
   canvas.width = width * scale;
   canvas.height = length * scale;
+
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 1;
 
   // Dibujar paneles
   for (let i = 0; i < panelsWide; i++) {
@@ -100,5 +102,4 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
   document.getElementById('whatsappBtn').href = whatsappUrl;
 });
-
 
