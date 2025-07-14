@@ -30,34 +30,46 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   let mainTees = 0;
   let crossTees4ft = 0;
   let crossTees2ft = 0;
+// =====================
+// CÁLCULO DE ESTRUCTURA
+// =====================
 
+let mainTees = 0;
+let crossTees4ft = 0;
+let crossTees2ft = 0;
 
-  // Lógica corregida para Main Tees y Cross Tees según dirección y tipo de panel
-// Cálculo de Main Tees y Cross Tees basado en la dirección y tipo de panel
+// Reglas básicas:
+// - Main Tees van separados cada 4 ft, en sentido contrario al panel largo
+// - Cross Tees de 4ft se usan con paneles 24x48
+// - Cross Tees de 2ft se usan con paneles 24x24
+
 if (mainDirection === 'longitud') {
-  // Main Tees van en el largo del área
-  mainTees = Math.ceil(length / 4) + 1;
+  // Main Tees se colocan a lo largo del área (dirección del largo)
+  mainTees = Math.ceil(width / 4) + 1; // separación cada 4 ft +1 fila
+  mainTees *= Math.ceil(length / 12); // cuántas piezas de 12 ft necesito por fila
 
   if (panelType === '24x48') {
-    // Solo se usan Cross Tee de 4ft en este caso
-    crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 4));
+    // Cross Tees de 4 ft colocados cada 2 ft en dirección opuesta
+    crossTees4ft = (Math.floor(length / 2) - 1) * Math.ceil(width / 2);
     crossTees2ft = 0;
-  } else if (panelType === '24x24') {
-    // Ambos tipos de Cross Tee para 24x24
-    crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 4));
-    crossTees2ft = Math.ceil(width / 2) * (Math.ceil(length / 2) - 1);
+  } else {
+    // panelType === '24x24'
+    // Ambos Cross Tees requeridos en trama cuadrada
+    crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 2) - 1);
+    crossTees2ft = Math.ceil(length / 2) * (Math.ceil(width / 2));
   }
 
 } else {
-  // Main Tees van en el ancho del área
-  mainTees = Math.ceil(width / 4) + 1;
+  // Main Tees se colocan a lo ancho del área (dirección del ancho)
+  mainTees = Math.ceil(length / 4) + 1;
+  mainTees *= Math.ceil(width / 12);
 
   if (panelType === '24x48') {
-    crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 4));
+    crossTees4ft = (Math.floor(width / 2) - 1) * Math.ceil(length / 2);
     crossTees2ft = 0;
-  } else if (panelType === '24x24') {
-    crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 4));
-    crossTees2ft = Math.ceil(length / 2) * (Math.ceil(width / 2) - 1);
+  } else {
+    crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 2) - 1);
+    crossTees2ft = Math.ceil(width / 2) * (Math.ceil(length / 2));
   }
 }
 
