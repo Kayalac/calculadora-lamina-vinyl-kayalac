@@ -1,12 +1,10 @@
 // App2.js
 // Lógica principal de cálculo para la calculadora de cielos falsos Kayalac
-document.getElementById('result').classList.remove('hidden');
-document.getElementById('layoutContainer').classList.remove('hidden');
 
 document.getElementById('calcForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+  e.preventDefault(); // 1) Evita recarga
 
-  // 1) Lectura y validación de entradas
+  // 2) Lectura de entradas
   const width         = parseFloat(document.getElementById('width').value);
   const length        = parseFloat(document.getElementById('length').value);
   const panelSel      = document.getElementById('panelType').value;    // '24" x 24"' o '24" x 48"'
@@ -21,109 +19,107 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
     return;
   }
 
-  // 2) Detectar tipo de panel
+  // 3) Detectar tipo de panel
   const is24x48 = panelSel.includes('48');
-  const is24x24 = panelSel.includes('24') && !is24x48;
+  const is24x24 = !is24x48;
 
-  // 3) Dimensiones de cada panel en pies
-  //    24x24 → 2x2 ft  |  24x48 → 2x4 ft
-  const panelWidth  = 2;
-  const panelLength = is24x24 ? 2 : 4;
+  // 4) Dimensiones de panel en ft
+  const panelW = 2;
+  const panelL = is24x24 ? 2 : 4;
 
-  // 4) Cantidad de paneles completos
-  const panelsWide  = Math.ceil(width  / panelWidth);
-  const panelsLong  = Math.ceil(length / panelLength);
+  // 5) Paneles necesarios
+  const panelsWide  = Math.ceil(width  / panelW);
+  const panelsLong  = Math.ceil(length / panelL);
   const totalPanels = panelsWide * panelsLong;
 
-  // 5) Preparar variables para Tees
-  let mainTees, crossTees4ft, crossTees2ft;
+  // 6) Definir “span” y “perp” correctamente:
+  //    “span” = eje paralelo a Main Tees, “perp” = perpendicular
+  const span = mainDirection === 'longitud' ? length : width;
+  const perp = mainDirection === 'longitud' ? width  : length;
 
-  // span = dirección de las Main Tees; perp = dirección perpendicular
-  const span = mainDirection === 'longitud' ? width  : length;
-  const perp = mainDirection === 'longitud' ? length : width;
-
-  // 6) Cálculo de Main Tees
+  // 7) Main Tees (líneas)
   let mainLines;
   if (is24x48) {
-    // panel 2×4 ft → Main cada 4 ft + línea extra de borde
+    // cada 4 ft + 1 borde extra
     mainLines = Math.ceil(span / 4) + 1;
   } else {
-    // panel 2×2 ft → Main cada 2 ft
+    // cada 2 ft, todo interior
     mainLines = Math.ceil(span / 2);
   }
-  mainTees = mainLines;
+  const mainTees = mainLines;
 
-  // 7) Cálculo de Cross Tees usando vanos interiores (floor de (perp - tramo) / tramo)
+  // 8) Cross Tees con vanos interiores (floor)
+  let cross4 = 0, cross2 = 0;
   if (is24x48) {
-    // Solo Cross 4ft
-    const interior4 = Math.floor((perp - 4) / 4);
-    crossTees4ft = Math.max(0, (mainLines - 1) * interior4);
-    crossTees2ft = 0;
+    // solo Cross 4ft: interior = floor((perp - 4) / 4)
+    const vanos4 = Math.floor((perp - 4) / 4);
+    cross4 = Math.max(0, (mainLines - 1) * vanos4);
   } else {
-    // Ambos Cross 4ft y 2ft
-    const interior4 = Math.floor((perp - 4) / 4);
-    const interior2 = Math.floor((perp - 2) / 2);
-    crossTees4ft = Math.max(0, (mainLines - 1) * interior4);
-    crossTees2ft = Math.max(0, (mainLines - 1) * interior2);
+    // ambos tipos
+    const vanos4 = Math.floor((perp - 4) / 4);
+    const vanos2 = Math.floor((perp - 2) / 2);
+    cross4 = Math.max(0, (mainLines - 1) * vanos4);
+    cross2 = Math.max(0, (mainLines - 1) * vanos2);
   }
 
-  // 8) Ángulo perimetral (10 ft cada pieza)
-  const perimeter   = 2 * (width + length);
-  const anglePieces = Math.ceil(perimeter / 10);
+  // 9) Ángulo perimetral (10 ft)
+  const perim      = 2 * (width + length);
+  const anglePieces= Math.ceil(perim / 10);
 
-  // 9) Alambre galvanizado (1 lb por cada 5 Main Tees)
-  const wirePounds = Math.ceil(mainTees / 5);
+  // 10) Alambre (1 lb / 5 Main)
+  const wireLb = Math.ceil(mainTees / 5);
 
-  // 10) Clavos chato de 1" (5 por cada pieza de ángulo)
+  // 11) Clavos (5 por ángulo)
   const nails = anglePieces * 5;
-  const nailKgs = nails > 100
+  const nailTxt = nails > 100 
     ? '1 kg de clavos chato 1"'
     : `${nails} clavos chato 1"`;
 
-  // 11) Mostrar resultados
+  // 12) Mostrar resultados
   outputList.innerHTML = `
-    <li><strong>Total de láminas:</strong> ${totalPanels}</li>
+    <li><strong>Total láminas:</strong> ${totalPanels}</li>
     <li><strong>Main Tees:</strong> ${mainTees}</li>
-    <li><strong>Cross Tees 4 ft:</strong> ${crossTees4ft}</li>
-    <li><strong>Cross Tees 2 ft:</strong> ${crossTees2ft}</li>
-    <li><strong>Ángulos 10 ft:</strong> ${anglePieces}</li>
-    <li><strong>${nailKgs}</strong></li>
-    <li><strong>${wirePounds} lb de alambre galvanizado 16#</strong></li>
+    <li><strong>Cross Tees 4ft:</strong> ${cross4}</li>
+    <li><strong>Cross Tees 2ft:</strong> ${cross2}</li>
+    <li><strong>Ángulos 10ft:</strong> ${anglePieces}</li>
+    <li><strong>${nailTxt}</strong></li>
+    <li><strong>${wireLb} lb alambre 16#</strong></li>
   `;
   document.getElementById('result').classList.remove('hidden');
   layoutContainer.classList.remove('hidden');
 
-  // 12) Dibujar layout en canvas (1 ft = 30px)
+  // 13) Dibujar canvas (1 ft = 30px)
   const scale = 30;
   canvas.width  = width  * scale;
   canvas.height = length * scale;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.strokeStyle = '#fff';
-  ctx.lineWidth = 1;
+  ctx.lineWidth   = 1;
 
   for (let i = 0; i < panelsWide; i++) {
     for (let j = 0; j < panelsLong; j++) {
-      const x = i * panelWidth  * scale;
-      const y = j * panelLength * scale;
-      ctx.fillStyle   = '#0B3D91';
-      ctx.fillRect(x, y, panelWidth * scale, panelLength * scale);
-      ctx.strokeRect(x, y, panelWidth * scale, panelLength * scale);
+      const x = i * panelW * scale;
+      const y = j * panelL * scale;
+      ctx.fillStyle = '#0B3D91';
+      ctx.fillRect(x, y, panelW * scale, panelL * scale);
+      ctx.strokeRect(x, y, panelW * scale, panelL * scale);
     }
   }
 
-  // 13) Enlace de WhatsApp
-  const whatsappText = [
-    `Cálculo para cielo falso:`,
-    `Láminas: ${totalPanels}`,
-    `Main Tees: ${mainTees}`,
-    `Cross 4 ft: ${crossTees4ft}`,
-    `Cross 2 ft: ${crossTees2ft}`,
-    `Ángulos: ${anglePieces}`,
-    `${nailKgs}`,
-    `${wirePounds} lb alambre galvanizado`
+  // 14) WhatsApp
+  const waText = [
+    'Cálculo cielo falso:',
+    `Láminas ${totalPanels}`,
+    `Main Tees ${mainTees}`,
+    `Cross4ft ${cross4}`, 
+    `Cross2ft ${cross2}`,
+    `Ángulos ${anglePieces}`,
+    nailTxt,
+    `${wireLb} lb alambre 16#`
   ].join('\n');
 
   document.getElementById('whatsappBtn').href =
-    `https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
+    `https://wa.me/?text=${encodeURIComponent(waText)}`;
 });
+
 
