@@ -39,6 +39,7 @@ body {
   font-weight: 600;
 }
 
+
 /* --------------- Formulario / Campos --------------- */
 .glass-body .field {
   margin-bottom: 1rem;
@@ -109,4 +110,18 @@ body {
   width: 100%;
   height: auto;
 }
+
+.glass-footer.fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 999;
+}
+
 
