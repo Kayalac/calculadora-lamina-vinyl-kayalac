@@ -27,67 +27,43 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   const panelW = 2;
   const panelL = is24x24 ? 2 : 4;
 
-  // 5) Paneles necesarios
+  // 5) Paneles completos necesarios
   const panelsWide  = Math.ceil(width  / panelW);
   const panelsLong  = Math.ceil(length / panelL);
   const totalPanels = panelsWide * panelsLong;
 
-  // 6) Definir “span” y “perp” correctamente:
-  //    “span” = eje paralelo a Main Tees, “perp” = perpendicular
+  // 6) Definir “span” y “perp”
+  //    span = eje paralelo a Main Tees, perp = perpendicular
   const span = mainDirection === 'longitud' ? length : width;
   const perp = mainDirection === 'longitud' ? width  : length;
 
-  // 7) Simulación de líneas de Main Tee:
-  //    Avanza cada panelL (2ft o 4ft) a lo largo de "span" incluyendo borde
-  let mains = [];
-  for (let pos = 0; pos <= span + 0.001; pos += panelL) {
-    mains.push(pos);
-  }
-  const mainTees = mains.length;
+  // 7) Main Tees (cada 4 ft + 1 borde)
+  //    Armstrong coloca un Main cada 4 ft, con uno extra en el borde
+  const mainLines = Math.ceil(span / 4) + 1;
+  const mainTees  = mainLines;
 
-  // 8) Simulación de líneas de Cross Tee:
-  //    Para border colocamos medias piezas (half of panel size)
-  const border2 = 1; // 1ft medio panel de 2ft
-  const border4 = 2; // 2ft medio panel de 4ft
-
-  // Generar posiciones interiores de Cross de 2ft y 4ft
-  let crossLines2 = [];
-  let crossLines4 = [];
-
-  // 2ft cross desde border2 hasta perp-border2
-  for (let pos = border2; pos <= perp - border2 + 0.001; pos += 2) {
-    crossLines2.push(pos);
-  }
-
-  // 4ft cross desde border4 hasta perp-border4
-  for (let pos = border4; pos <= perp - border4 + 0.001; pos += 4) {
-    crossLines4.push(pos);
-  }
-
-  // Función contadora de tramos completos
-  function countPieces(lines, length, pieceLen) {
-    return lines.reduce((sum, _) => sum + Math.floor(length / pieceLen), 0);
-  }
-
-  // Calcular piezas necesarias
-  let cross2 = 0, cross4 = 0;
+  // 8) Cross Tees
+  let cross4 = 0, cross2 = 0;
   if (is24x48) {
-    // Solo 4ft
-    cross4 = countPieces(crossLines4, span, 4);
+    // Solo Cross 4 ft
+    const count4 = Math.ceil(perp / 4) - 1;               // huecos interiores de 4ft
+    cross4 = Math.max(0, (mainLines - 1) * count4);
   } else {
-    // Ambos
-    cross4 = countPieces(crossLines4, span, 4);
-    cross2 = countPieces(crossLines2, span, 2);
+    // Ambos Cross 4 ft y 2 ft
+    const count4 = Math.ceil(perp / 4) - 1;               // huecos de 4ft
+    const count2 = Math.ceil(perp / 2) - 1;               // huecos de 2ft
+    cross4 = Math.max(0, (mainLines - 1) * count4);
+    cross2 = Math.max(0, (mainLines - 1) * count2);
   }
 
-  // 9) Ángulo perimetral (10 ft cada tramo)
+  // 9) Ángulo perimetral (cada 10 ft)
   const perim       = 2 * (width + length);
   const anglePieces = Math.ceil(perim / 10);
 
-  // 10) Alambre (1 lb / 5 Main Tees)
+  // 10) Alambre (1 lb por cada 5 Main Tees)
   const wireLb = Math.ceil(mainTees / 5);
 
-  // 11) Clavos (5 por cada ángulo de 10ft)
+  // 11) Clavos (5 por cada tramo de 10 ft)
   const nails  = anglePieces * 5;
   const nailTxt = nails > 100
     ? '1 kg de clavos chato 1"'
@@ -95,7 +71,7 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
 
   // 12) Mostrar resultados
   outputList.innerHTML = `
-    <li><strong>Total láminas:</strong> ${totalPanels}</li>
+    <li><strong>Total de láminas:</strong> ${totalPanels}</li>
     <li><strong>Main Tees:</strong> ${mainTees}</li>
     <li><strong>Cross Tees 4ft:</strong> ${cross4}</li>
     <li><strong>Cross Tees 2ft:</strong> ${cross2}</li>
@@ -124,7 +100,7 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
     }
   }
 
-  // 14) WhatsApp share
+  // 14) Compartir por WhatsApp
   const waText = [
     'Cálculo cielo falso:',
     `Láminas ${totalPanels}`,
@@ -139,4 +115,3 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   document.getElementById('whatsappBtn').href =
     `https://wa.me/?text=${encodeURIComponent(waText)}`;
 });
-
