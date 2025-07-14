@@ -27,35 +27,40 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   const panelsLong = Math.ceil(length / panelLength);
   const totalPanels = panelsWide * panelsLong;
 
+  let mainTees = 0;
+  let crossTees4ft = 0;
+  let crossTees2ft = 0;
+
+
   // Lógica corregida para Main Tees y Cross Tees según dirección y tipo de panel
+// Cálculo de Main Tees y Cross Tees basado en la dirección y tipo de panel
 if (mainDirection === 'longitud') {
-  // Main Tees colocados a lo largo del área
-  mainTees = Math.ceil(length / 4);
+  // Main Tees van en el largo del área
+  mainTees = Math.ceil(length / 4) + 1;
 
   if (panelType === '24x48') {
-    // Para paneles de 2x4 ft, solo se usan Cross Tee de 4ft
-    crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 4) - 1);
+    // Solo se usan Cross Tee de 4ft en este caso
+    crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 4));
     crossTees2ft = 0;
   } else if (panelType === '24x24') {
-    // Para paneles de 2x2 ft, se usan ambos tipos de Cross Tee
+    // Ambos tipos de Cross Tee para 24x24
     crossTees4ft = Math.ceil(width / 2) * (Math.ceil(length / 4));
     crossTees2ft = Math.ceil(width / 2) * (Math.ceil(length / 2) - 1);
   }
 
 } else {
-  // Main Tees colocados a lo ancho del área
-  mainTees = Math.ceil(width / 4);
+  // Main Tees van en el ancho del área
+  mainTees = Math.ceil(width / 4) + 1;
 
   if (panelType === '24x48') {
-    // Para paneles de 2x4 ft, solo se usan Cross Tee de 4ft
-    crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 4) - 1);
+    crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 4));
     crossTees2ft = 0;
   } else if (panelType === '24x24') {
-    // Para paneles de 2x2 ft, se usan ambos tipos de Cross Tee
     crossTees4ft = Math.ceil(length / 2) * (Math.ceil(width / 4));
     crossTees2ft = Math.ceil(length / 2) * (Math.ceil(width / 2) - 1);
   }
 }
+
 
   // Ángulo Perimetral (10 ft cada uno)
   const perimeter = 2 * (width + length);
