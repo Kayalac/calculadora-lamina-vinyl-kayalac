@@ -7,7 +7,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 2rem 5rem; /* padding-bottom para footer fijo */
 }
 
 /* --------------- Contenedor Principal --------------- */
@@ -18,7 +18,7 @@ body {
   gap: 1.5rem;
 }
 
-/* --------------- “Glass Card” --------------- */
+/* --------------- "Glass Card" --------------- */
 .glass-card {
   background: rgba(255,255,255,0.2);
   backdrop-filter: blur(15px);
@@ -28,7 +28,7 @@ body {
   color: #111;
 }
 
-/*  Header con logo + título  */
+/* Header con logo + título */
 .glass-header {
   text-align: center;
   margin-bottom: 1rem;
@@ -38,7 +38,6 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
 }
-
 
 /* --------------- Formulario / Campos --------------- */
 .glass-body .field {
@@ -74,6 +73,7 @@ body {
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
   transition: transform 0.15s, box-shadow 0.15s;
 }
 .btn:hover {
@@ -93,17 +93,30 @@ body {
   color: #fff;
 }
 
-/* --------------- Resultados / Canvas --------------- */
+/* --------------- Resultados --------------- */
 .hidden { display: none; }
 #result h2 {
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
 }
+#outputList {
+  list-style: none;
+  padding: 0;
+}
+#outputList li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+#outputList li:last-child {
+  border-bottom: none;
+}
+
+/* --------------- Canvas / Layout --------------- */
 .canvas-wrap {
   margin-top: 1rem;
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: auto; /* scroll para habitaciones grandes */
 }
 #layoutCanvas {
   display: block;
@@ -111,6 +124,22 @@ body {
   height: auto;
 }
 
+/* Leyenda del canvas */
+.canvas-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.legend-item  { display: flex; align-items: center; gap: 0.25rem; }
+.legend-main  { color: #c0392b; }
+.legend-cross4 { color: #1a6fa8; }
+.legend-cross2 { color: #5ba3d0; }
+
+/* --------------- Footer fijo --------------- */
 .glass-footer.fixed {
   position: fixed;
   bottom: 0;
@@ -123,5 +152,3 @@ body {
   background: rgba(255, 255, 255, 0.3);
   z-index: 999;
 }
-
-

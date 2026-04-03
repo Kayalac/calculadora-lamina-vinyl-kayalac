@@ -20,11 +20,11 @@
       <form id="calcForm" class="glass-body">
         <div class="field">
           <label for="width">Ancho (ft):</label>
-          <input type="number" id="width" placeholder="e.g. 25" required />
+          <input type="number" id="width" placeholder="e.g. 25" min="0.1" step="any" required />
         </div>
         <div class="field">
           <label for="length">Largo (ft):</label>
-          <input type="number" id="length" placeholder="e.g. 30" required />
+          <input type="number" id="length" placeholder="e.g. 30" min="0.1" step="any" required />
         </div>
         <div class="field">
           <label for="panelType">Tamaño de panel:</label>
@@ -43,6 +43,7 @@
 
         <div class="actions">
           <button type="submit" class="btn btn-primary">Calcular</button>
+          <button type="button" id="resetBtn" class="btn btn-secondary">Limpiar</button>
           <button type="button" onclick="window.print()" class="btn btn-secondary">Imprimir</button>
           <a href="manual_instalacion_kayalac.pdf" class="btn btn-secondary" target="_blank">Manual PDF</a>
           <a id="whatsappBtn" href="#" class="btn btn-whatsapp" target="_blank">Compartir WhatsApp</a>
@@ -56,18 +57,21 @@
       <ul id="outputList"></ul>
 
       <div id="layoutContainer" class="canvas-wrap hidden">
+        <div class="canvas-legend">
+          <span class="legend-item legend-main">&#9473; Main Tee</span>
+          <span class="legend-item legend-cross4">&#9473; Cross Tee 4ft</span>
+          <span class="legend-item legend-cross2">- - Cross Tee 2ft</span>
+        </div>
         <canvas id="layoutCanvas"></canvas>
       </div>
     </div>
 
   </div>
 
- <footer class="glass-footer">
+  <footer class="glass-footer fixed">
     <p>© 2025 Kayalac. Todos los derechos reservados.</p>
   </footer>
 
   <script src="App2.js"></script>
 </body>
-   
 </html>
-
