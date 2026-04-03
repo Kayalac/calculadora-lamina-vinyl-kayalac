@@ -140,8 +140,8 @@ function generarPDF(d) {
     .paso ol,.paso ul{padding-left:18px}
     .paso li{margin-bottom:3px}
     .nota{margin-top:7px;background:#fff3cd;border:1px solid #ffc107;border-radius:4px;padding:6px 10px;font-size:11.5px}
-    .diagrama{margin:8px 0 4px;text-align:center}
-    .diagrama svg{max-width:100%;border:1px solid #dde;border-radius:6px;background:white}
+    .diagrama{margin:8px 0 6px;text-align:center}
+    .diagrama svg{max-width:100%;border:1px solid #dde;border-radius:6px;background:white;display:block;margin:0 auto;overflow:hidden}
     .footer{margin-top:24px;border-top:1px solid #ccc;padding-top:8px;font-size:11px;color:#999;text-align:center}
     .btn-imp{display:block;margin:0 auto 20px;padding:10px 28px;background:#0B3D91;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer}
     .btn-imp:hover{background:#0a2f6e}
@@ -291,74 +291,71 @@ function generarSVGsPasos(d) {
   const C2 = '#5ba3d0';  // Cross Tee 2ft (azul claro)
   const CA = '#9b7320';  // Ángulo (bronce)
   const CP = '#b8d9f0';  // Panel (azul claro)
-  const W  = 360; const H = 170; // viewBox
+  const W  = 380; const H = 200; // viewBox — margen suficiente para textos
 
   // ── SVG 1: Vista lateral — marcar nivel ─────────────────────────────────
   const svg1 = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
   <rect width="${W}" height="${H}" fill="white"/>
   <!-- Techo -->
-  <rect x="20" y="12" width="320" height="10" fill="#888" rx="1"/>
+  <rect x="20" y="14" width="330" height="10" fill="#888" rx="1"/>
   <!-- Paredes -->
-  <rect x="20" y="12" width="8" height="148" fill="#bbb"/>
-  <rect x="332" y="12" width="8" height="148" fill="#bbb"/>
+  <rect x="20" y="14" width="8" height="155" fill="#bbb"/>
+  <rect x="342" y="14" width="8" height="155" fill="#bbb"/>
   <!-- Piso -->
-  <rect x="20" y="152" width="320" height="8" fill="#888" rx="1"/>
-  <!-- Relleno de la habitación -->
-  <rect x="28" y="22" width="304" height="130" fill="#eef4ff"/>
-  <!-- Línea de nivel (roja punteada) -->
-  <rect x="20" y="98" width="18" height="4" fill="${CM}"/>
-  <rect x="322" y="98" width="18" height="4" fill="${CM}"/>
-  <line x1="38" y1="100" x2="322" y2="100" stroke="${CM}" stroke-width="2" stroke-dasharray="9,4"/>
+  <rect x="20" y="161" width="330" height="8" fill="#888" rx="1"/>
+  <!-- Interior -->
+  <rect x="28" y="24" width="314" height="137" fill="#eef4ff"/>
+  <!-- Línea de nivel -->
+  <rect x="20" y="104" width="18" height="4" fill="${CM}"/>
+  <rect x="342" y="104" width="8" height="4" fill="${CM}"/>
+  <line x1="38" y1="106" x2="342" y2="106" stroke="${CM}" stroke-width="2" stroke-dasharray="9,4"/>
   <!-- Etiqueta nivel -->
-  <rect x="118" y="88" width="124" height="17" fill="white" rx="3" stroke="${CM}" stroke-width="1"/>
-  <text x="180" y="101" text-anchor="middle" font-family="Arial" font-size="11" fill="${CM}" font-weight="bold">Nivel del plafón</text>
+  <rect x="128" y="93" width="124" height="18" fill="white" rx="3" stroke="${CM}" stroke-width="1"/>
+  <text x="190" y="106" text-anchor="middle" font-family="Arial" font-size="11" fill="${CM}" font-weight="bold">Nivel del plafón</text>
   <!-- Nivel de burbuja -->
-  <rect x="50" y="93" width="72" height="14" rx="3" fill="#ffc107" stroke="#555" stroke-width="1"/>
-  <ellipse cx="86" cy="100" rx="8" ry="5" fill="white" stroke="#555" stroke-width="1"/>
-  <circle cx="86" cy="100" r="2.5" fill="#27ae60"/>
-  <text x="86" y="118" text-anchor="middle" font-family="Arial" font-size="9" fill="#555">Nivel de burbuja</text>
-  <!-- Lápiz en la pared derecha -->
-  <polygon points="322,96 322,104 336,100" fill="#ffd700" stroke="#555" stroke-width="0.8"/>
-  <!-- Flecha de altura -->
-  <line x1="348" y1="22" x2="348" y2="96" stroke="#333" stroke-width="1.5"/>
-  <polygon points="344,22 352,22 348,14" fill="#333"/>
-  <polygon points="344,100 352,100 348,108" fill="#333"/>
-  <text x="353" y="65" font-family="Arial" font-size="9" fill="#555">Altura</text>
-  <!-- Título -->
-  <text x="180" y="165" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Marque el nivel del plafón en las 4 paredes con nivel de burbuja</text>
+  <rect x="44" y="99" width="76" height="14" rx="3" fill="#ffc107" stroke="#555" stroke-width="1"/>
+  <ellipse cx="82" cy="106" rx="8" ry="5" fill="white" stroke="#555" stroke-width="1"/>
+  <circle cx="82" cy="106" r="2.5" fill="#27ae60"/>
+  <text x="82" y="124" text-anchor="middle" font-family="Arial" font-size="9" fill="#555">Nivel de burbuja</text>
+  <!-- Lápiz pared derecha -->
+  <polygon points="342,102 342,110 356,106" fill="#ffd700" stroke="#555" stroke-width="0.8"/>
+  <!-- Flecha altura -->
+  <line x1="366" y1="24" x2="366" y2="102" stroke="#333" stroke-width="1.5"/>
+  <polygon points="362,24 370,24 366,16" fill="#333"/>
+  <polygon points="362,106 370,106 366,114" fill="#333"/>
+  <text x="372" y="68" font-family="Arial" font-size="9" fill="#555">Altura</text>
+  <!-- Título dentro del viewBox -->
+  <text x="190" y="185" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Marque el nivel en las 4 paredes con nivel de burbuja</text>
 </svg>`;
 
   // ── SVG 2: Ángulo perimetral + clavos ────────────────────────────────────
-  const nailPositions = [45, 95, 145, 195, 245, 295, 335];
+  const nailPositions = [45, 95, 145, 200, 255, 310, 355];
   const nailSVG = nailPositions.map(x => `
-  <circle cx="${x}" cy="105" r="4.5" fill="#444"/>
-  <line x1="${x}" y1="110" x2="${x}" y2="140" stroke="#333" stroke-width="2.5"/>
-  <line x1="${x-5}" y1="140" x2="${x+5}" y2="140" stroke="#333" stroke-width="2.5"/>`).join('');
+  <circle cx="${x}" cy="108" r="5" fill="#444"/>
+  <line x1="${x}" y1="113" x2="${x}" y2="145" stroke="#333" stroke-width="2.5"/>
+  <line x1="${x-6}" y1="145" x2="${x+6}" y2="145" stroke="#333" stroke-width="2.5"/>`).join('');
 
   const svg2 = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
   <rect width="${W}" height="${H}" fill="white"/>
-  <!-- Pared (fondo) -->
-  <rect x="20" y="20" width="320" height="130" fill="#d5d5d5" rx="2"/>
-  <!-- Textura de pared -->
-  ${[60,100,140,180,220,260,300].map(x => `<line x1="${x}" y1="20" x2="${x}" y2="150" stroke="#c5c5c5" stroke-width="0.5"/>`).join('')}
-  ${[50,80,110].map(y => `<line x1="20" y1="${y}" x2="340" y2="${y}" stroke="#c5c5c5" stroke-width="0.5"/>`).join('')}
-  <!-- Ángulo (parte horizontal sobre la pared) -->
-  <rect x="20" y="100" width="320" height="12" fill="${CA}" rx="1"/>
-  <!-- Cara frontal del ángulo -->
-  <rect x="20" y="100" width="320" height="3" fill="#7a5a18"/>
-  <!-- Etiqueta ángulo -->
-  <text x="180" y="122" text-anchor="middle" font-family="Arial" font-size="11" fill="white" font-weight="bold">Ángulo perimetral 10ft</text>
+  <!-- Pared -->
+  <rect x="15" y="15" width="350" height="135" fill="#d5d5d5" rx="2"/>
+  ${[55,100,145,190,235,280,325].map(x => `<line x1="${x}" y1="15" x2="${x}" y2="150" stroke="#c8c8c8" stroke-width="0.6"/>`).join('')}
+  ${[45,80,115].map(y => `<line x1="15" y1="${y}" x2="365" y2="${y}" stroke="#c8c8c8" stroke-width="0.6"/>`).join('')}
+  <!-- Ángulo perimetral (perfil L) -->
+  <rect x="15" y="103" width="350" height="13" fill="${CA}" rx="1"/>
+  <rect x="15" y="103" width="350" height="3" fill="#7a5a18"/>
+  <text x="190" y="121" text-anchor="middle" font-family="Arial" font-size="11" fill="white" font-weight="bold">Ángulo perimetral 10ft</text>
   <!-- Clavos -->
   ${nailSVG}
-  <!-- Flecha de espaciado entre primeros dos clavos -->
-  <line x1="45" y1="155" x2="95" y2="155" stroke="#333" stroke-width="1.5"/>
-  <polygon points="45,152 45,158 38,155" fill="#333"/>
-  <polygon points="95,152 95,158 102,155" fill="#333"/>
-  <text x="70" y="167" text-anchor="middle" font-family="Arial" font-size="9" fill="#333">40–50 cm</text>
+  <!-- Flecha espaciado -->
+  <line x1="45" y1="163" x2="95" y2="163" stroke="#333" stroke-width="1.5"/>
+  <polygon points="45,160 45,166 38,163" fill="#333"/>
+  <polygon points="95,160 95,166 102,163" fill="#333"/>
+  <text x="70" y="176" text-anchor="middle" font-family="Arial" font-size="9" fill="#333">40–50 cm</text>
   <!-- Etiqueta clavo -->
-  <text x="70" y="148" text-anchor="middle" font-family="Arial" font-size="9" fill="#333">Clavo chato 1"</text>
+  <text x="70" y="155" text-anchor="middle" font-family="Arial" font-size="9" fill="#333">Clavo chato 1"</text>
   <!-- Título -->
-  <text x="180" y="167" text-anchor="middle" font-family="Arial" font-size="0" fill="#333"/>
+  <text x="190" y="194" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Fije el ángulo contra la pared con clavos chato 1" cada 40–50 cm</text>
 </svg>`;
 
   // ── SVG 3: Diagrama de alambre — vista de planta del techo ───────────────
@@ -398,7 +395,7 @@ function generarSVGsPasos(d) {
   <!-- Medida 4ft -->
   <text x="15" y="13" font-family="Arial" font-size="8" fill="#888">← 4ft →</text>
   <!-- Título -->
-  <text x="175" y="165" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Instale amarre cada 4ft sobre cada línea de Main Tee</text>
+  <text x="190" y="192" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Instale amarre cada 4ft sobre cada línea de Main Tee</text>
 </svg>`;
 
   // ── SVG 4: Main Tees colgando — vista lateral ────────────────────────────
@@ -432,7 +429,7 @@ function generarSVGsPasos(d) {
   <text x="100" y="142" text-anchor="middle" font-family="Arial" font-size="14" fill="#333">↺</text>
   <text x="100" y="155" text-anchor="middle" font-family="Arial" font-size="8" fill="#555">Retuerza 3×</text>
   <!-- Título -->
-  <text x="180" y="167" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Cuelgue Main Tees del alambre y nivele con cordel guía</text>
+  <text x="190" y="192" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Cuelgue Main Tees del alambre y nivele con cordel guía</text>
 </svg>`;
 
   // ── SVG 5: Cross Tees — vista de planta ──────────────────────────────────
@@ -490,7 +487,7 @@ function generarSVGsPasos(d) {
   ${d.is24x24 ? `<rect x="320" y="62" width="20" height="2" fill="${C2}" rx="1" opacity="0.85"/>
   <text x="345" y="66" font-family="Arial" font-size="8" fill="${C2}">2ft</text>` : ''}
   <!-- Título -->
-  <text x="175" y="165" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">${d.is24x48 ? 'Cross Tees 4ft cada 2ft — encajan a presión en el Main Tee' : 'Cross Tees 4ft cada 4ft, luego 2ft entre ellos'}</text>
+  <text x="190" y="192" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">${d.is24x48 ? 'Cross Tees 4ft cada 2ft — encajan a presión en el Main Tee' : 'Cross Tees 4ft cada 4ft, luego 2ft entre ellos'}</text>
 </svg>`;
 
   // ── SVG 6: Colocación de láminas ─────────────────────────────────────────
@@ -533,7 +530,7 @@ function generarSVGsPasos(d) {
   <!-- Flecha de inserción -->
   <text x="${cx6}" y="${insertY - 8}" text-anchor="middle" font-family="Arial" font-size="16" fill="#e67e22">↓</text>
   <!-- Flecha desde centro -->
-  <text x="180" y="${H - 10}" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Coloque láminas del centro hacia los bordes — incline 30° e inserte</text>
+  <text x="190" y="192" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Coloque láminas del centro hacia los bordes — incline 30° e inserte</text>
 </svg>`;
 
   // ── SVG 7: Acabado final ─────────────────────────────────────────────────
@@ -574,7 +571,7 @@ function generarSVGsPasos(d) {
   <rect x="15" y="15" width="${cols7 * pxW7}" height="${rows7 * pxH7}" fill="#eef4f8" stroke="#ccc" stroke-width="1"/>
   ${panels7}${grid7}${checks7}
   ${levelLines7}
-  <text x="175" y="${H - 4}" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Cielo falso completado — verifique nivel y encaje de todas las láminas</text>
+  <text x="190" y="192" text-anchor="middle" font-family="Arial" font-size="10" fill="#333" font-weight="bold">Cielo falso completado — verifique nivel y encaje de todas las láminas</text>
 </svg>`;
 
   return [svg1, svg2, svg3, svg4, svg5, svg6, svg7];
