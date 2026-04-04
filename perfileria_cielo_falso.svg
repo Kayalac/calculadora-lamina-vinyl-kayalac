@@ -1,0 +1,193 @@
+<svg viewBox="0 0 900 1100" xmlns="http://www.w3.org/2000/svg" font-family="'Georgia', serif">
+
+  <defs>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#b0b8c1"/>
+      <stop offset="30%" style="stop-color:#e8edf2"/>
+      <stop offset="55%" style="stop-color:#f5f7f9"/>
+      <stop offset="75%" style="stop-color:#d0d8e0"/>
+      <stop offset="100%" style="stop-color:#9aa4ae"/>
+    </linearGradient>
+    <linearGradient id="webGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8a9299"/>
+      <stop offset="40%" style="stop-color:#d0d8df"/>
+      <stop offset="100%" style="stop-color:#b0b8c0"/>
+    </linearGradient>
+    <linearGradient id="whiteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="60%" style="stop-color:#e8eaea"/>
+      <stop offset="100%" style="stop-color:#d0d2d2"/>
+    </linearGradient>
+    <linearGradient id="angleSide" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c8cacc"/>
+      <stop offset="100%" style="stop-color:#a0a4a8"/>
+    </linearGradient>
+    <pattern id="diagLines" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#c8c8c8" stroke-width="0.8" opacity="0.7"/>
+    </pattern>
+    <pattern id="dotPattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.2" fill="#b8b8b8" opacity="0.8"/>
+    </pattern>
+    <pattern id="crossPerf" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="1.5" fill="#8a9299" opacity="0.9"/>
+    </pattern>
+    <radialGradient id="nailHead" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" style="stop-color:#f0f2f4"/>
+      <stop offset="50%" style="stop-color:#c8cfd6"/>
+      <stop offset="100%" style="stop-color:#8a9299"/>
+    </radialGradient>
+    <linearGradient id="nailBody" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#9aa2aa"/>
+      <stop offset="30%" style="stop-color:#e0e5ea"/>
+      <stop offset="60%" style="stop-color:#f0f3f5"/>
+      <stop offset="100%" style="stop-color:#a8b0b8"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#00000022"/>
+    </filter>
+    <pattern id="arcPattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect width="80" height="80" fill="url(#diagLines)"/>
+      <path d="M0,40 Q20,20 40,40 Q60,60 80,40" fill="none" stroke="#d8d8d8" stroke-width="2.5"/>
+      <path d="M40,0 Q60,20 40,40 Q20,60 40,80" fill="none" stroke="#d8d8d8" stroke-width="2.5"/>
+      <circle cx="40" cy="40" r="4" fill="url(#dotPattern)" stroke="#cccccc" stroke-width="0.5"/>
+      <circle cx="0" cy="0" r="3" fill="url(#dotPattern)" stroke="#cccccc" stroke-width="0.5"/>
+      <circle cx="80" cy="0" r="3" fill="url(#dotPattern)" stroke="#cccccc" stroke-width="0.5"/>
+      <circle cx="0" cy="80" r="3" fill="url(#dotPattern)" stroke="#cccccc" stroke-width="0.5"/>
+      <circle cx="80" cy="80" r="3" fill="url(#dotPattern)" stroke="#cccccc" stroke-width="0.5"/>
+    </pattern>
+    <clipPath id="laminaClip">
+      <rect x="30" y="60" width="320" height="160" rx="2"/>
+    </clipPath>
+    <linearGradient id="wireGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e5ea"/>
+      <stop offset="40%" style="stop-color:#f5f7f9"/>
+      <stop offset="100%" style="stop-color:#9aa4ae"/>
+    </linearGradient>
+  </defs>
+
+  <!-- FONDO -->
+  <rect width="900" height="1100" fill="#f4f5f6"/>
+
+  <!-- Título general -->
+  <text x="450" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50" letter-spacing="2">PERFILERÍA — SISTEMA CIELO FALSO</text>
+  <line x1="60" y1="48" x2="840" y2="48" stroke="#b0b8c0" stroke-width="1"/>
+
+  <!-- 1. LÁMINA ACÚSTICA VINÍLICA 2x4ft -->
+  <text x="60" y="80" font-size="13" font-weight="bold" fill="#2c3e50">① Lámina Acústica Vinílica 2×4ft — Estilo 238</text>
+  <rect x="30" y="90" width="320" height="160" rx="3" fill="#f8f8f8" stroke="#d0d0d0" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="30" y="90" width="320" height="160" rx="3" fill="url(#arcPattern)" clip-path="url(#laminaClip)"/>
+  <line x1="190" y1="90" x2="190" y2="250" stroke="#e0e0e0" stroke-width="2.5"/>
+  <line x1="30" y1="170" x2="350" y2="170" stroke="#e0e0e0" stroke-width="2.5"/>
+  <rect x="30" y="90" width="320" height="160" rx="3" fill="none" stroke="#cccccc" stroke-width="2"/>
+  <text x="190" y="270" text-anchor="middle" font-size="10" fill="#7f8c8d">2 ft × 4 ft | Color Blanco | Acabado texturizado</text>
+
+  <!-- 2. CROSS TEE 2ft -->
+  <text x="60" y="310" font-size="13" font-weight="bold" fill="#2c3e50">② Cross Tee 2ft</text>
+  <g filter="url(#shadow)" transform="translate(40, 320)">
+    <rect x="0" y="52" width="280" height="8" rx="1" fill="white" stroke="#d0d0d0" stroke-width="0.8"/>
+    <rect x="4" y="20" width="272" height="32" fill="url(#webGrad)"/>
+    <rect x="4" y="20" width="272" height="32" fill="url(#crossPerf)" opacity="0.5"/>
+    <rect x="0" y="16" width="280" height="8" rx="1" fill="url(#metalGrad)"/>
+    <rect x="0" y="10" width="14" height="18" rx="1" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.8"/>
+    <rect x="2" y="13" width="5" height="5" rx="0.5" fill="#8a9299"/>
+    <rect x="2" y="20" width="5" height="5" rx="0.5" fill="#8a9299"/>
+    <polygon points="14,14 20,18 14,22" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.5"/>
+  </g>
+  <text x="190" y="395" text-anchor="middle" font-size="10" fill="#7f8c8d">Longitud: 2ft | Perfil T invertida | Acero galvanizado</text>
+
+  <!-- 3. CROSS TEE 4ft -->
+  <text x="60" y="420" font-size="13" font-weight="bold" fill="#2c3e50">③ Cross Tee 4ft</text>
+  <g filter="url(#shadow)" transform="translate(40, 430)">
+    <rect x="0" y="52" width="560" height="8" rx="1" fill="white" stroke="#d0d0d0" stroke-width="0.8"/>
+    <rect x="4" y="20" width="552" height="32" fill="url(#webGrad)"/>
+    <rect x="4" y="20" width="552" height="32" fill="url(#crossPerf)" opacity="0.5"/>
+    <rect x="0" y="16" width="560" height="8" rx="1" fill="url(#metalGrad)"/>
+    <rect x="0" y="10" width="14" height="18" rx="1" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.8"/>
+    <rect x="2" y="13" width="5" height="5" rx="0.5" fill="#8a9299"/>
+    <rect x="2" y="20" width="5" height="5" rx="0.5" fill="#8a9299"/>
+    <polygon points="14,14 20,18 14,22" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.5"/>
+    <rect x="546" y="10" width="14" height="18" rx="1" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.8"/>
+    <rect x="553" y="13" width="5" height="5" rx="0.5" fill="#8a9299"/>
+    <rect x="553" y="20" width="5" height="5" rx="0.5" fill="#8a9299"/>
+  </g>
+  <text x="360" y="505" text-anchor="middle" font-size="10" fill="#7f8c8d">Longitud: 4ft | Mismo perfil que 2ft, mayor longitud | Acero galvanizado</text>
+
+  <!-- 4. MAIN TEE 12ft -->
+  <text x="60" y="535" font-size="13" font-weight="bold" fill="#2c3e50">④ Main Tee 12ft</text>
+  <g filter="url(#shadow)" transform="translate(30, 545)">
+    <rect x="0" y="58" width="840" height="10" rx="1" fill="white" stroke="#d0d0d0" stroke-width="1"/>
+    <rect x="5" y="18" width="830" height="40" fill="url(#webGrad)"/>
+    <rect x="5" y="18" width="830" height="40" fill="url(#crossPerf)" opacity="0.4"/>
+    <rect x="140" y="22" width="12" height="15" rx="1" fill="#7a8892" opacity="0.9"/>
+    <rect x="280" y="22" width="12" height="15" rx="1" fill="#7a8892" opacity="0.9"/>
+    <rect x="420" y="22" width="12" height="15" rx="1" fill="#7a8892" opacity="0.9"/>
+    <rect x="560" y="22" width="12" height="15" rx="1" fill="#7a8892" opacity="0.9"/>
+    <rect x="700" y="22" width="12" height="15" rx="1" fill="#7a8892" opacity="0.9"/>
+    <ellipse cx="210" cy="38" rx="7" ry="4" fill="#7a8892" opacity="0.7"/>
+    <ellipse cx="350" cy="38" rx="7" ry="4" fill="#7a8892" opacity="0.7"/>
+    <ellipse cx="490" cy="38" rx="7" ry="4" fill="#7a8892" opacity="0.7"/>
+    <ellipse cx="630" cy="38" rx="7" ry="4" fill="#7a8892" opacity="0.7"/>
+    <rect x="0" y="12" width="840" height="10" rx="1" fill="url(#metalGrad)"/>
+    <rect x="0" y="5" width="18" height="22" rx="1" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.8"/>
+    <rect x="3" y="8" width="6" height="6" rx="0.5" fill="#8a9299"/>
+    <rect x="3" y="17" width="6" height="6" rx="0.5" fill="#8a9299"/>
+    <polygon points="18,10 26,16 18,22" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.5"/>
+    <rect x="822" y="5" width="18" height="22" rx="1" fill="url(#metalGrad)" stroke="#aab0b8" stroke-width="0.8"/>
+    <rect x="831" y="8" width="6" height="6" rx="0.5" fill="#8a9299"/>
+    <rect x="831" y="17" width="6" height="6" rx="0.5" fill="#8a9299"/>
+  </g>
+  <text x="450" y="628" text-anchor="middle" font-size="10" fill="#7f8c8d">Longitud: 12ft | Alma alta con slots para Cross Tees | Conectores de empalme doble | Acero galvanizado</text>
+
+  <!-- 5. ÁNGULO BLANCO 10ft -->
+  <text x="60" y="660" font-size="13" font-weight="bold" fill="#2c3e50">⑤ Ángulo Blanco 10ft</text>
+  <g filter="url(#shadow)" transform="translate(30, 670)">
+    <rect x="0" y="0" width="840" height="14" rx="1" fill="url(#whiteGrad)" stroke="#d8d8d8" stroke-width="0.8"/>
+    <rect x="0" y="14" width="840" height="14" rx="1" fill="url(#angleSide)" stroke="#c8c8c8" stroke-width="0.8"/>
+    <polygon points="0,0 14,0 0,28" fill="#3a3f44" opacity="0.85"/>
+    <polygon points="840,0 826,0 840,28" fill="#3a3f44" opacity="0.85"/>
+    <line x1="0" y1="14" x2="840" y2="14" stroke="#b0b4b8" stroke-width="0.5" stroke-dasharray="4,2" opacity="0.5"/>
+  </g>
+  <text x="450" y="722" text-anchor="middle" font-size="10" fill="#7f8c8d">Longitud: 10ft | Perfil en L 90° | Liso sin perforaciones | Pintado blanco</text>
+
+  <!-- 6. CLAVO CHATO 1" -->
+  <text x="60" y="752" font-size="13" font-weight="bold" fill="#2c3e50">⑥ Clavo Chato 1"</text>
+  <g filter="url(#shadow)" transform="translate(200, 762)">
+    <ellipse cx="60" cy="18" rx="44" ry="14" fill="url(#nailHead)" stroke="#b0b8c0" stroke-width="1"/>
+    <ellipse cx="48" cy="13" rx="16" ry="6" fill="white" opacity="0.35"/>
+    <rect x="44" y="28" width="32" height="130" fill="url(#nailBody)" rx="2"/>
+    <line x1="44" y1="38" x2="76" y2="45" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="50" x2="76" y2="57" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="62" x2="76" y2="69" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="74" x2="76" y2="81" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="86" x2="76" y2="93" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="98" x2="76" y2="105" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="110" x2="76" y2="117" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="122" x2="76" y2="129" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="134" x2="76" y2="141" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <line x1="44" y1="146" x2="76" y2="153" stroke="#8a9299" stroke-width="1" opacity="0.7"/>
+    <polygon points="44,158 76,158 60,200" fill="url(#nailBody)" stroke="#9aa2aa" stroke-width="0.8"/>
+    <rect x="44" y="28" width="6" height="130" fill="#8a9299" opacity="0.3" rx="1"/>
+  </g>
+  <text x="450" y="995" text-anchor="middle" font-size="10" fill="#7f8c8d">Longitud: 1" | Cabeza chata circular | Vástago estriado helicoidal | Acero galvanizado</text>
+
+  <!-- 7. ALAMBRE GALVANIZADO CAL. 16 -->
+  <text x="60" y="1025" font-size="13" font-weight="bold" fill="#2c3e50">⑦ Alambre Galvanizado Cal. 16</text>
+  <g filter="url(#shadow)" transform="translate(60, 1040)">
+    <rect x="0" y="16" width="760" height="6" rx="3" fill="url(#wireGrad)" stroke="#b0b8c0" stroke-width="0.5"/>
+    <rect x="0" y="17" width="760" height="2" rx="1" fill="white" opacity="0.5"/>
+    <circle cx="80" cy="19" r="5" fill="url(#wireGrad)" stroke="#a0a8b0" stroke-width="0.8"/>
+    <circle cx="200" cy="19" r="5" fill="url(#wireGrad)" stroke="#a0a8b0" stroke-width="0.8"/>
+    <circle cx="320" cy="19" r="5" fill="url(#wireGrad)" stroke="#a0a8b0" stroke-width="0.8"/>
+    <circle cx="440" cy="19" r="5" fill="url(#wireGrad)" stroke="#a0a8b0" stroke-width="0.8"/>
+    <circle cx="560" cy="19" r="5" fill="url(#wireGrad)" stroke="#a0a8b0" stroke-width="0.8"/>
+    <circle cx="680" cy="19" r="5" fill="url(#wireGrad)" stroke="#a0a8b0" stroke-width="0.8"/>
+    <circle cx="0" cy="19" r="4" fill="#9aa4ae" stroke="#7a8290" stroke-width="1"/>
+    <circle cx="760" cy="19" r="4" fill="#9aa4ae" stroke="#7a8290" stroke-width="1"/>
+  </g>
+  <text x="450" y="1082" text-anchor="middle" font-size="10" fill="#7f8c8d">Calibre 16 | Acero galvanizado | Uso: amarre y suspensión de estructura</text>
+
+  <!-- PIE DE PÁGINA -->
+  <line x1="60" y1="1090" x2="840" y2="1090" stroke="#b0b8c0" stroke-width="0.8"/>
+  <text x="450" y="1098" text-anchor="middle" font-size="9" fill="#aab0b8">Sistema Cielo Falso — Perfilería completa | SVG técnico de referencia</text>
+
+</svg>
