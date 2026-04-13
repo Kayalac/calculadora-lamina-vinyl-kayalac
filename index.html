@@ -3,73 +3,574 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora Lámina Acústica Vinyl</title>
+  <meta name="description" content="Calculadora profesional de plafón y cielo falso — Kayalac Honduras. Calcula láminas, perfilería y materiales al instante.">
+  <title>Calculadora de Plafón — Kayalac</title>
   <link rel="icon" href="favicon-circular.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app">
 
-    <!-- INPUT CARD -->
-    <div class="glass-card input-card">
-      <header class="glass-header">
-        <img src="logo_kayalac.png" alt="Kayalac Logo" class="logo">
-        <h1>Calculadora de Plafón</h1>
-      </header>
-
-      <form id="calcForm" class="glass-body">
-        <div class="field">
-          <label for="width">Ancho (ft):</label>
-          <input type="number" id="width" placeholder="e.g. 25" min="0.1" step="any" required />
+  <!-- ═══ SPLASH SCREEN ═══ -->
+  <div id="splash" class="splash">
+    <div class="splash-content">
+      <img src="logo_kayalac.png" alt="Kayalac" class="splash-logo" />
+      <div class="splash-typewriter">
+        <div class="tw-text">
+          <span class="tw-char">K</span><span class="tw-char">A</span><span class="tw-char">Y</span><span class="tw-char">A</span><span class="tw-char">L</span><span class="tw-char">A</span><span class="tw-char">C</span>
         </div>
-        <div class="field">
-          <label for="length">Largo (ft):</label>
-          <input type="number" id="length" placeholder="e.g. 30" min="0.1" step="any" required />
-        </div>
-        <div class="field">
-          <label for="panelType">Tamaño de panel:</label>
-          <select id="panelType">
-            <option value="24x24">24″ × 24″</option>
-            <option value="24x48">24″ × 48″</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="mainDirection">Dirección Main Tee:</label>
-          <select id="mainDirection">
-            <option value="longitud">A lo largo</option>
-            <option value="ancho">A lo ancho</option>
-          </select>
-        </div>
-
-        <div class="actions">
-          <button type="submit" class="btn btn-primary">Calcular</button>
-          <button type="button" id="resetBtn" class="btn btn-secondary">Limpiar</button>
-          <button type="button" id="pdfBtn" class="btn btn-pdf" disabled>Generar PDF</button>
-          <a id="whatsappBtn" href="#" class="btn btn-whatsapp" target="_blank">Compartir WhatsApp</a>
-        </div>
-      </form>
-    </div>
-
-    <!-- RESULT CARD -->
-    <div id="result" class="glass-card result-card hidden">
-      <h2>Resultados</h2>
-      <ul id="outputList"></ul>
-
-      <div id="layoutContainer" class="canvas-wrap hidden">
-        <div class="canvas-legend">
-          <span class="legend-item legend-main">&#9473; Main Tee</span>
-          <span class="legend-item legend-cross4">&#9473; Cross Tee 4ft</span>
-          <span class="legend-item legend-cross2">- - Cross Tee 2ft</span>
-        </div>
-        <canvas id="layoutCanvas"></canvas>
+        <span class="tw-cursor"></span>
       </div>
+      <div class="splash-sub">Materiales de construcción premium</div>
+      <div class="splash-loader"><div class="splash-loader-bar"></div></div>
     </div>
-
   </div>
 
-  <footer class="glass-footer fixed">
-    <p>© 2025 Kayalac. Todos los derechos reservados.</p>
-  </footer>
+  <!-- Background effects -->
+  <div class="bg-gradient"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <header class="app-header fade-in">
+      <div class="header-logo">
+        <img src="logo_kayalac.png" alt="Kayalac" class="logo" />
+        <div class="header-text">
+          <h1>Calculadora de Plafón</h1>
+          <p class="header-sub">Calcula materiales para cielo falso al instante</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <label class="theme-switch" title="Cambiar tema">
+          <input type="checkbox" id="themeToggle" />
+          <span class="theme-slider">
+            <svg class="theme-icon icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+        </label>
+        <div class="header-badge">
+          <span class="badge-dot"></span>
+          v3.0 Pro
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <main class="main-grid">
+
+      <!-- ═══ LEFT PANEL — MULTI-STEP FORM ═══ -->
+      <section class="panel panel-config fade-in-up" style="animation-delay:.1s">
+
+        <!-- Card Header -->
+        <div class="msf-header">
+          <div class="msf-title-row">
+            <div>
+              <h2 class="msf-title">Calculadora de Plafón</h2>
+              <p class="msf-desc">Completa los pasos para calcular los materiales de tu cielo falso.</p>
+            </div>
+          </div>
+          <!-- Progress bar -->
+          <div class="msf-progress-row">
+            <div class="msf-progress-track"><div id="msfProgressBar" class="msf-progress-fill" style="width:33%"></div></div>
+            <span class="msf-progress-label" id="msfProgressLabel">1/3 pasos</span>
+          </div>
+          <!-- Step indicators -->
+          <div class="msf-steps">
+            <button type="button" class="msf-step active" data-step="1">
+              <span class="msf-step-num">1</span> Configuración
+            </button>
+            <button type="button" class="msf-step" data-step="2">
+              <span class="msf-step-num">2</span> Medidas
+            </button>
+            <button type="button" class="msf-step" data-step="3">
+              <span class="msf-step-num">3</span> Materiales
+            </button>
+          </div>
+        </div>
+
+        <form id="calcForm">
+
+          <!-- Step content container with slide animation -->
+          <div class="msf-content">
+
+            <!-- ── STEP 1: Configuración ── -->
+            <div class="msf-pane active" data-pane="1">
+              <div class="field-group">
+                <label class="field-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 6H3"/><path d="M10 12H3"/><path d="M10 18H3"/><circle cx="17" cy="12" r="3"/><circle cx="17" cy="18" r="3"/></svg>
+                  Unidad de medida
+                </label>
+                <div class="toggle-group">
+                  <button type="button" class="toggle-btn active" data-unit="ft">
+                    <span class="toggle-icon">📐</span> Pies (ft)
+                  </button>
+                  <button type="button" class="toggle-btn" data-unit="m">
+                    <span class="toggle-icon">📏</span> Metros (m)
+                  </button>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                  Forma de la habitación
+                </label>
+                <div class="toggle-group">
+                  <button type="button" class="toggle-btn active" data-mode="rect">
+                    <span class="toggle-icon">▭</span> Rectangular
+                  </button>
+                  <button type="button" class="toggle-btn" data-mode="poly">
+                    <span class="toggle-icon">⬠</span> Polígono
+                  </button>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label class="field-label" for="panelType">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    Panel
+                  </label>
+                  <select id="panelType" class="select-styled">
+                    <option value="24x24">24″ × 24″</option>
+                    <option value="24x48">24″ × 48″</option>
+                  </select>
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="mainDirection">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                    Main Tee
+                  </label>
+                  <select id="mainDirection" class="select-styled">
+                    <option value="longitud">A lo largo</option>
+                    <option value="ancho">A lo ancho</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 2: Medidas ── -->
+            <div class="msf-pane" data-pane="2">
+
+              <!-- MODO RECTANGULAR -->
+              <div id="rectMode" class="rect-fields">
+                <div class="field-row">
+                  <div class="field-group">
+                    <label class="field-label" for="width">Ancho (<span class="unit-label">ft</span>)</label>
+                    <div class="input-wrap">
+                      <input type="number" id="width" placeholder="25" min="0.1" step="any" required />
+                      <span class="input-suffix unit-label">ft</span>
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="length">Largo (<span class="unit-label">ft</span>)</label>
+                    <div class="input-wrap">
+                      <input type="number" id="length" placeholder="30" min="0.1" step="any" required />
+                      <span class="input-suffix unit-label">ft</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MODO POLÍGONO -->
+              <div id="polyMode" class="hidden">
+                <div class="poly-tip">
+                  <div class="tip-icon">💡</div>
+                  <div>
+                    <strong>Construye pared por pared.</strong><br>
+                    <span class="tip-sub">Escoge ángulo, longitud, y agrega. Edita cualquier pared después.</span>
+                  </div>
+                </div>
+
+                <div class="poly-canvas-wrap">
+                  <canvas id="polyCanvas" width="440" height="280"></canvas>
+                  <div id="polyInfo" class="poly-info-overlay hidden">
+                    <span id="polyAreaInfo"></span>
+                    <span class="info-divider">|</span>
+                    <span id="polyPerimInfo"></span>
+                  </div>
+                </div>
+
+                <div class="wall-builder">
+                  <div class="angle-row">
+                    <div class="direction-pad">
+                      <button type="button" class="dir-btn" data-angle="315" title="315°">↖</button>
+                      <button type="button" class="dir-btn" data-angle="0"   title="0°">↑</button>
+                      <button type="button" class="dir-btn" data-angle="45"  title="45°">↗</button>
+                      <button type="button" class="dir-btn" data-angle="270" title="270°">←</button>
+                      <div class="dir-center">
+                        <canvas id="angleDial" width="44" height="44"></canvas>
+                      </div>
+                      <button type="button" class="dir-btn" data-angle="90"  title="90°">→</button>
+                      <button type="button" class="dir-btn" data-angle="225" title="225°">↙</button>
+                      <button type="button" class="dir-btn" data-angle="180" title="180°">↓</button>
+                      <button type="button" class="dir-btn" data-angle="135" title="135°">↘</button>
+                    </div>
+                    <div class="angle-input-wrap">
+                      <label class="field-label" for="wallAngle">Ángulo</label>
+                      <div class="input-wrap">
+                        <input type="number" id="wallAngle" placeholder="0" min="0" max="360" step="any" value="" />
+                        <span class="input-suffix">°</span>
+                      </div>
+                      <span class="angle-hint">0° arriba · 90° derecha</span>
+                      <label class="field-label" for="wallLength" style="margin-top:.5rem">Longitud</label>
+                      <div class="input-wrap">
+                        <input type="number" id="wallLength" placeholder="10" min="0.1" step="any" />
+                        <span class="input-suffix unit-label">ft</span>
+                      </div>
+                      <button type="button" id="addWall" class="btn btn-accent btn-full">+ Agregar pared</button>
+                    </div>
+                  </div>
+
+                  <div class="wall-actions">
+                    <button type="button" id="undoWall" class="btn btn-ghost">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                      Deshacer
+                    </button>
+                    <button type="button" id="autoCloseWall" class="btn btn-accent-outline">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      Cerrar habitación
+                    </button>
+                    <button type="button" id="clearWalls" class="btn btn-ghost btn-danger">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                      Limpiar
+                    </button>
+                  </div>
+                </div>
+
+                <div class="wall-list-wrap">
+                  <table id="wallTable">
+                    <thead><tr><th>#</th><th>Ángulo</th><th>Longitud (<span class="unit-label">ft</span>)</th><th></th></tr></thead>
+                    <tbody id="wallBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STEP 3: Calcular ── -->
+            <div class="msf-pane" data-pane="3">
+              <div class="msf-summary-msg">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+                <h3>Todo listo para calcular</h3>
+                <p>Revisa tu configuración y presiona <strong>Calcular materiales</strong> para obtener la lista completa de materiales, el layout y la guía de instalación.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Card Footer — navigation -->
+          <div class="msf-footer">
+            <div class="msf-footer-left">
+              <button type="button" id="resetBtn" class="btn btn-ghost">Limpiar todo</button>
+            </div>
+            <div class="msf-footer-right">
+              <button type="button" id="msfBackBtn" class="btn btn-ghost" style="display:none">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                Atrás
+              </button>
+              <button type="button" id="msfNextBtn" class="btn btn-primary">
+                Siguiente paso
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+              <!-- Hidden until step 3 -->
+              <button type="submit" id="msfCalcBtn" class="btn btn-primary btn-lg" style="display:none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+                Calcular materiales
+              </button>
+            </div>
+          </div>
+
+          <!-- Post-calc actions (shown after results) -->
+          <div id="postCalcActions" class="msf-post-actions hidden">
+            <button type="button" id="pdfBtn" class="btn btn-ghost" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              PDF
+            </button>
+            <a id="whatsappBtn" href="#" class="btn btn-whatsapp" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.11.546 4.093 1.504 5.818L0 24l6.335-1.462A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82a9.82 9.82 0 0 1-5.012-1.373l-.36-.213-3.73.978.996-3.642-.235-.374A9.79 9.79 0 0 1 2.18 12C2.18 6.58 6.58 2.18 12 2.18S21.82 6.58 21.82 12 17.42 21.82 12 21.82z"/></svg>
+              WhatsApp
+            </a>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- ═══ RIGHT PANEL ═══ -->
+
+      <!-- Product Gallery (visible before calculation) -->
+      <section id="productGallery" class="panel panel-gallery fade-in-up" style="animation-delay:.2s">
+        <div class="gallery-header">
+          <p class="gallery-eyebrow">Perfilería para cielo falso</p>
+          <h2 class="gallery-title">Nuestros <span class="gallery-accent">Materiales</span></h2>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-card gallery-card-1">
+            <div class="gallery-img-wrap">
+              <img src="img/main-tee.jpg" alt="Main Tee 12ft" class="gallery-img" draggable="false" />
+            </div>
+            <div class="gallery-card-info">
+              <span class="gallery-card-label">Main Tee</span>
+              <span class="gallery-card-sub">12 ft — Estructura principal</span>
+            </div>
+          </div>
+          <div class="gallery-card gallery-card-2">
+            <div class="gallery-img-wrap">
+              <img src="img/cross-tee.png" alt="Cross Tee 4ft" class="gallery-img" draggable="false" />
+            </div>
+            <div class="gallery-card-info">
+              <span class="gallery-card-label">Cross Tee</span>
+              <span class="gallery-card-sub">4 ft / 2 ft — Conectores</span>
+            </div>
+          </div>
+          <div class="gallery-card gallery-card-3">
+            <div class="gallery-img-wrap">
+              <img src="img/lamina-238.jpg" alt="Lámina Vinyl 24x24" class="gallery-img" draggable="false" />
+            </div>
+            <div class="gallery-card-info">
+              <span class="gallery-card-label">Lámina Vinyl</span>
+              <span class="gallery-card-sub">24″×24″ — Acabado texturizado</span>
+            </div>
+          </div>
+          <div class="gallery-card gallery-card-4">
+            <div class="gallery-img-wrap">
+              <img src="img/lamina-154.jpg" alt="Lámina Vinyl 24x48" class="gallery-img" draggable="false" />
+            </div>
+            <div class="gallery-card-info">
+              <span class="gallery-card-label">Lámina Vinyl</span>
+              <span class="gallery-card-sub">24″×48″ — Acabado liso</span>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-cta">
+          <p class="gallery-cta-text">Calcula cuánto necesitas con nuestra herramienta</p>
+        </div>
+      </section>
+
+      <!-- Results (hidden until calculated) -->
+      <section id="result" class="panel panel-results hidden fade-in-up" style="animation-delay:.2s">
+        <div class="panel-header">
+          <div class="panel-icon panel-icon-success">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h2 class="panel-title">Resultados</h2>
+        </div>
+
+        <ul id="outputList" class="results-list"></ul>
+
+        <div id="layoutContainer" class="layout-container hidden">
+          <div class="layout-header">
+            <h3>Layout de Instalación</h3>
+            <div class="canvas-legend">
+              <span class="legend-item legend-main"><span class="legend-line"></span> Main Tee</span>
+              <span class="legend-item legend-cross4"><span class="legend-line"></span> Cross 4ft</span>
+              <span class="legend-item legend-cross2"><span class="legend-line legend-dashed"></span> Cross 2ft</span>
+              <span class="legend-item legend-poly"><span class="legend-line legend-thick"></span> Polígono</span>
+            </div>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="layoutCanvas"></canvas>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ═══ PAYMENT GATEWAY SECTION ═══ -->
+    <section class="panel commerce-section fade-in-up">
+      <div class="commerce-header">
+        <p class="gallery-eyebrow">Métodos de pago</p>
+        <h2 class="gallery-title">Compra con <span class="gallery-accent">confianza</span></h2>
+        <p class="commerce-sub">Realiza tu pedido de forma segura con los métodos de pago más confiables.</p>
+      </div>
+
+      <div class="payment-grid">
+        <!-- PayPal -->
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=madeinhonduras13%40hotmail.com&item_name=Compra+Kayalac&currency_code=USD"
+           target="_blank" rel="noopener" class="payment-card paypal-card">
+          <div class="payment-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>
+          </div>
+          <div class="payment-info">
+            <span class="payment-label">Pagar con PayPal</span>
+            <span class="payment-sub">Pago seguro internacional</span>
+          </div>
+          <svg class="payment-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+
+        <!-- Visa / Mastercard (Ficohsa) -->
+        <a href="#" class="payment-card card-ficohsa" onclick="alert('Próximamente — pasarela Ficohsa en integración'); return false;">
+          <div class="payment-icon payment-icon-card">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="payment-info">
+            <span class="payment-label">Visa / Mastercard</span>
+            <span class="payment-sub">vía Banco Ficohsa</span>
+          </div>
+          <span class="payment-badge">Pronto</span>
+        </a>
+
+        <!-- Transferencia -->
+        <a href="#mayoristaForm" class="payment-card card-transfer">
+          <div class="payment-icon payment-icon-transfer">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="payment-info">
+            <span class="payment-label">Transferencia / Depósito</span>
+            <span class="payment-sub">Ficohsa · Compra mayorista</span>
+          </div>
+          <svg class="payment-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ WHOLESALE / MAYORISTA FORM ═══ -->
+    <section id="mayoristaForm" class="panel wholesale-section fade-in-up">
+      <div class="commerce-header">
+        <p class="gallery-eyebrow">Programa mayorista</p>
+        <h2 class="gallery-title">¿Eres <span class="gallery-accent">distribuidor</span>?</h2>
+        <p class="commerce-sub">Contáctanos y visitamos tu negocio para ofrecerte precios especiales mayoristas. Un ejecutivo te contactará en menos de 24 horas.</p>
+      </div>
+
+      <form id="wholesaleForm" class="wholesale-form" novalidate>
+        <!-- Honeypot (hidden field - bots will fill it, humans won't) -->
+        <div class="honeypot" aria-hidden="true">
+          <label>No llenar este campo</label>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Timestamp (used to detect instant submissions from bots) -->
+        <input type="hidden" id="wsFormLoadTime" />
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="wsName">Nombre completo *</label>
+            <div class="input-wrap">
+              <input type="text" id="wsName" name="name" placeholder="Juan Pérez" required />
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="wsCompany">Empresa / Negocio *</label>
+            <div class="input-wrap">
+              <input type="text" id="wsCompany" name="company" placeholder="Ferretería Los Andes" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="wsPhone">Teléfono *</label>
+            <div class="input-wrap">
+              <input type="tel" id="wsPhone" name="phone" placeholder="+504 9999-9999" required />
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="wsEmail">Correo electrónico *</label>
+            <div class="input-wrap">
+              <input type="email" id="wsEmail" name="email" placeholder="contacto@empresa.com" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="wsCity">Ciudad / Departamento *</label>
+            <div class="input-wrap">
+              <input type="text" id="wsCity" name="city" placeholder="Tegucigalpa, Francisco Morazán" required />
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="wsEstimate">Estimado de compra mensual *</label>
+            <select id="wsEstimate" name="estimate" class="select-styled" required>
+              <option value="">Selecciona un rango...</option>
+              <option value="menos-10k">Menos de L. 10,000</option>
+              <option value="10k-50k">L. 10,000 – L. 50,000</option>
+              <option value="50k-150k">L. 50,000 – L. 150,000</option>
+              <option value="150k-500k">L. 150,000 – L. 500,000</option>
+              <option value="mas-500k">Más de L. 500,000</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Productos de interés</label>
+          <div class="checkbox-grid">
+            <label class="check-pill">
+              <input type="checkbox" name="interest" value="lamina-vinyl" />
+              <span>Láminas Vinyl</span>
+            </label>
+            <label class="check-pill">
+              <input type="checkbox" name="interest" value="perfileria" />
+              <span>Perfilería completa</span>
+            </label>
+            <label class="check-pill">
+              <input type="checkbox" name="interest" value="main-tee" />
+              <span>Main Tees</span>
+            </label>
+            <label class="check-pill">
+              <input type="checkbox" name="interest" value="cross-tee" />
+              <span>Cross Tees</span>
+            </label>
+            <label class="check-pill">
+              <input type="checkbox" name="interest" value="accesorios" />
+              <span>Accesorios / Clavos</span>
+            </label>
+            <label class="check-pill">
+              <input type="checkbox" name="interest" value="otros" />
+              <span>Otros</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="wsMessage">Mensaje adicional</label>
+          <textarea id="wsMessage" name="message" rows="3" placeholder="Cuéntanos de tu negocio, volumen, frecuencia de compra, horarios de visita..."></textarea>
+        </div>
+
+        <!-- Consent -->
+        <label class="consent-check">
+          <input type="checkbox" id="wsConsent" required />
+          <span>Acepto que un ejecutivo de Kayalac me contacte por teléfono o correo electrónico para coordinar una visita comercial.</span>
+        </label>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Enviar solicitud
+        </button>
+
+        <p class="form-security-note">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Tus datos están protegidos. Solo los usamos para contactarte.
+        </p>
+
+        <!-- Success/Error feedback -->
+        <div id="wsFormMsg" class="form-msg hidden"></div>
+      </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="app-footer fade-in">
+      <div class="footer-inner">
+        <span>&copy; 2025 Kayalac — Honduras</span>
+        <span class="footer-dot"></span>
+        <span>Todos los derechos reservados</span>
+        <span class="footer-dot"></span>
+        <span class="footer-version">v3.0 Pro</span>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/biciret" target="_blank" rel="noopener" class="social-btn social-btn-label" title="Seguir en Facebook">
+          <img src="https://images.shadcnspace.com/assets/svgs/icon-facebook.svg" alt="Facebook" class="social-icon" />
+          Seguir en Facebook
+        </a>
+      </div>
+    </footer>
+
+  </div>
 
   <script src="App2.js"></script>
 </body>
