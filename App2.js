@@ -1,6 +1,24 @@
 // App2.js — Calculadora Kayalac v3.0 — Polígonos + Unidades
 
 // ═══════════════════════════════════════════════════════════
+//  GOOGLE ANALYTICS — helper de tracking
+// ═══════════════════════════════════════════════════════════
+function trackEvent(name, params = {}) {
+  if (typeof gtag === 'function') {
+    gtag('event', name, params);
+  }
+}
+
+// Detectar origen del visitante (UTM, referrer, QR scan)
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const source = params.get('utm_source') || (document.referrer ? new URL(document.referrer).hostname : 'directo');
+  const medium = params.get('utm_medium') || 'web';
+  const campaign = params.get('utm_campaign') || 'organico';
+  trackEvent('visit_source', { source, medium, campaign, screen_size: `${window.innerWidth}x${window.innerHeight}` });
+})();
+
+// ═══════════════════════════════════════════════════════════
 //  SPLASH SCREEN — 2 segundos
 // ═══════════════════════════════════════════════════════════
 (function() {
@@ -842,6 +860,17 @@ document.getElementById('calcForm').addEventListener('submit', function (e) {
   document.getElementById('pdfBtn').disabled = false;
   showPostCalcActions();
 
+  // Track calculation event
+  trackEvent('calcular_materiales', {
+    forma: isPolygon ? 'poligono' : 'rectangular',
+    paredes: isPolygon ? walls.length : 4,
+    panel: panelType,
+    unidad: currentUnit,
+    area_ft2: Math.round(areaFt2),
+    laminas: totalPanels,
+    main_tees: mainTees
+  });
+
   if (isPolygon) {
     drawLayoutPolygon(polyVertsFt, pW, pL, mainAlongLength, is24x24);
   } else {
@@ -881,7 +910,30 @@ document.getElementById('resetBtn').addEventListener('click', function () {
 
 document.getElementById('pdfBtn').addEventListener('click', function () {
   if (!ultimoCalculo) { alert('Primero realice un cálculo.'); return; }
+  trackEvent('descargar_pdf', { forma: ultimoCalculo.isPolygon ? 'poligono' : 'rectangular' });
   generarPDF(ultimoCalculo);
+});
+
+// Track WhatsApp share
+const waBtn = document.getElementById('whatsappBtn');
+if (waBtn) waBtn.addEventListener('click', () => trackEvent('compartir_whatsapp'));
+
+// Track Facebook follow
+document.querySelectorAll('a[href*="facebook.com/biciret"]').forEach(a => {
+  a.addEventListener('click', () => trackEvent('seguir_facebook'));
+});
+
+// Track payment clicks
+document.querySelectorAll('.payment-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const label = card.querySelector('.payment-label')?.textContent || 'desconocido';
+    trackEvent('click_pago', { metodo: label });
+  });
+});
+
+// Track step navigation
+document.querySelectorAll('.msf-step').forEach(s => {
+  s.addEventListener('click', () => trackEvent('paso_visitado', { paso: s.dataset.step }));
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1658,6 +1710,7 @@ function trazarLinea(ctx, x1, y1, x2, y2) {
     const honeypot = form.querySelector('input[name="website"]');
     if (honeypot && honeypot.value.trim() !== '') {
       console.warn('[Anti-bot] Honeypot triggered');
+      trackEvent('bot_bloqueado', { tipo: 'honeypot' });
       showMsg('success', '✓ Solicitud enviada. Te contactaremos pronto.');
       form.reset();
       return;
@@ -1667,6 +1720,7 @@ function trazarLinea(ctx, x1, y1, x2, y2) {
     const elapsed = Date.now() - parseInt(loadTimeField.value);
     if (elapsed < 3000) {
       console.warn('[Anti-bot] Form submitted too fast:', elapsed + 'ms');
+      trackEvent('bot_bloqueado', { tipo: 'velocidad', ms: elapsed });
       showMsg('error', '⚠ Por favor, tómate un momento para revisar el formulario.');
       return;
     }
@@ -1748,6 +1802,7 @@ function trazarLinea(ctx, x1, y1, x2, y2) {
         });
 
         if (!response.ok) throw new Error('Error en el envío');
+        trackEvent('mayorista_enviado', { metodo: 'formspree', estimado: data.estimado_compra, ciudad: data.ciudad });
         showMsg('success', '✓ <strong>Solicitud enviada exitosamente.</strong> Un ejecutivo de Kayalac te contactará en las próximas 24 horas.');
         form.reset();
       } else {
@@ -1755,10 +1810,12 @@ function trazarLinea(ctx, x1, y1, x2, y2) {
         const body = Object.entries(data).map(([k, v]) => `${k.toUpperCase()}: ${v}`).join('\n');
         const mailto = `mailto:ventasbiciret@gmail.com?subject=${encodeURIComponent('[KAYALAC-MAYORISTA] ' + data.empresa)}&body=${encodeURIComponent(body)}`;
         window.location.href = mailto;
+        trackEvent('mayorista_enviado', { metodo: 'mailto', estimado: data.estimado_compra, ciudad: data.ciudad });
         showMsg('success', '✓ <strong>Abriendo tu cliente de correo...</strong> Por favor envía el mensaje para completar tu solicitud.');
       }
     } catch (err) {
       console.error('Form submit error:', err);
+      trackEvent('mayorista_error', { error: err.message });
       showMsg('error', '⚠ Error al enviar. Por favor escríbenos directamente a <strong>ventasbiciret@gmail.com</strong> o llámanos.');
     } finally {
       submitBtn.disabled = false;
